@@ -1,4 +1,4 @@
 package bfk.brickbreaker;
 
-public class GameFrame {
+public class BBFrame {
 }
