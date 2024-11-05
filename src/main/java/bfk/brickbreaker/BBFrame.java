@@ -1,4 +1,7 @@
 package bfk.brickbreaker;
 
-public class BBFrame {
+import javax.swing.*;
+
+public class BBFrame extends JFrame {
+
 }

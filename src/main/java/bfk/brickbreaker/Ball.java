@@ -6,7 +6,8 @@ public class Ball extends Ellipse2D.Double {
     private int angle;
     private final int width;
     private final int height;
-    final int VELOCITY = 10;
+    final int XVELOCITY = 10;
+    final int YVELOCITY = 10;
 
     public Ball(int angle, int width, int height) {
         this.angle = angle;
@@ -14,16 +15,16 @@ public class Ball extends Ellipse2D.Double {
         this.height = height;
     }
     public double getLocationX() {
-        return getX() + Math.cos(angle) * VELOCITY;
+        return getX() + Math.cos(angle) * XVELOCITY;
     }
 
     public double getLocationY() {
-        return getY() + Math.sin(angle) * VELOCITY;
+        return getY() + Math.sin(angle) * YVELOCITY;
     }
 
-    public int bounce(int direction) {
-        angle = direction + 90;
-        return angle;
+    //should change the angle
+    public void hitWall(boolean hitRight) {
+
     }
 
 }

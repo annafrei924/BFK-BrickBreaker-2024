@@ -1,4 +1,6 @@
 package bfk.brickbreaker;
 
-public class BBComponent {
+import javax.swing.*;
+
+public class BBComponent extends JComponent {
 }

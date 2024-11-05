@@ -1,4 +1,4 @@
 package bfk.brickbreaker;
 
-public class BBController {
+public class BBController{
 }
