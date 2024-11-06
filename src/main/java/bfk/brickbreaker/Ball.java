@@ -56,7 +56,7 @@ public class Ball extends Ellipse2D.Double {
 
     public void bounce(Direction direction) {
         // velocity will change --> angle will change on collision
-        switch(direction) {
+        switch (direction) {
             case LEFT, RIGHT -> velocityX = -velocityX;
             case TOP, BOTTOMPADDLE -> velocityY = -velocityY;
             default -> { }
