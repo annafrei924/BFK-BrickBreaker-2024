@@ -66,7 +66,7 @@ public class Ball extends Ellipse2D.Double {
     public boolean collides() {
         //checks if ball collides with a wall
         return x + radius >= width || x - radius <= 0
-                ||  y - radius <= 0 || y + radius >= height)
+                ||  y - radius <= 0 || y + radius >= height;
 
     }
 

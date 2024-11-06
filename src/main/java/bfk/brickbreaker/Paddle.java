@@ -19,7 +19,6 @@ public class Paddle {
     public void movePaddle(MouseEvent e, Boolean isMoving, int changeX) {
         if (isMoving) {
             int currX = e.getXOnScreen();
-            int currY = e.getYOnScreen();
 
             setLocation(currX - changeX, y);
         }
