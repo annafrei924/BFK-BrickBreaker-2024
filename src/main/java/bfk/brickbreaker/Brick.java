@@ -35,6 +35,16 @@ public class Brick extends Rectangle {
         return rows;
     }
 
+    public void initialPopulate() {
+        for (int col = 0; col < getCols(); col++) {
+            for (int row = 0; row < 4; row++) {
+                if (rand.nextDouble() < 1.0 / 4.0) {
+                    bricks[row][col] = 1;
+                }
+            }
+        }
+    }
+
     public void populateBricks() {
         //randomly populate top row with new bricks
         for (int col = 0; col < getWidth(); col++) {

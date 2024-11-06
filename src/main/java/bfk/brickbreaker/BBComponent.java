@@ -21,7 +21,7 @@ public class BBComponent extends JComponent {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.blue);
 
-        brick.populateBricks();
+        brick.initialPopulate();
 
     }
 
