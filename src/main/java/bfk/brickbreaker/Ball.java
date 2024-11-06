@@ -40,40 +40,34 @@ public class Ball extends Ellipse2D.Double {
         return radius;
     }
 
-    //x is updated and new position is returned
+
 
     public double updateX() {
+        //x is updated and new position is returned
         x += velocityX;
         return x;
     }
 
-    //y is updated and new position is return
-
     public double updateY() {
+        //y is updated and new position is return
         y += velocityY;
         return y;
     }
 
-    // velocity will change --> angle will change on collision
-
     public void bounce(Direction direction) {
-        switch(direction){
+        // velocity will change --> angle will change on collision
+        switch (direction) {
             case LEFT, RIGHT -> velocityX = -velocityX;
-            case TOP, PADDLE -> velocityY = -velocityY;
+            case TOP, BOTTOMPADDLE -> velocityY = -velocityY;
             default -> { }
         }
     }
 
-    //checks if ball collides with a wall
-
     public boolean collides() {
-        if (x + radius >= width || x - radius <= 0
-                ||  y - radius <= 0 || y + radius >= height) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        //checks if ball collides with a wall
+        return x + radius >= width || x - radius <= 0
+                ||  y - radius <= 0 || y + radius >= height;
+
     }
 
 

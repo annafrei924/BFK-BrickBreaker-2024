@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class BBComponent extends JComponent {
     private Brick brick;
+
     private Ball ball;
     private Paddle paddle;
 
