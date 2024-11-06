@@ -4,22 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BBFrame extends JFrame {
-    Brick brick = new Brick(300, 300, 15, 15);
-    Ball ball = new Ball(45, 300, 700, 10);
-    Paddle paddle = new Paddle(100, 20, 250, 750);
+    Ball ball = new Ball(45, 10, 295, 720, 10, 10);
+    Paddle paddle = new Paddle(250, 740, 100, 20);
+    Brick[] bricks = new Brick[15];
+
+    int width = 600;
+    int height = 800;
 
     public BBFrame() {
         setTitle("Brick Breaker");
-        setSize(600, 800);
+        setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        BBComponent bbComponent = new BBComponent(brick, ball, paddle);
-        BBController bbController = new BBController(ball, brick, paddle, bbComponent);
+        BBComponent bbComponent = new BBComponent(ball, paddle, bricks, width, height);
+        BBController bbController = new BBController(ball, paddle, bbComponent);
 
         add(bbComponent, BorderLayout.CENTER);
 
-        brick.initialPopulate();
     }
 
 }

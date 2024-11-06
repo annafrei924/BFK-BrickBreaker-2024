@@ -4,30 +4,20 @@ import java.awt.geom.Ellipse2D;
 
 public class Ball extends Ellipse2D.Double {
     private double angle; //launch angle, start at 45
-    private final double speed = 10; //speed, start at 10
-    private final int radius; //radius of ball
-
-    private double x; //x location
-    private double y; //y location
+    private double speed = 10; //speed, start at 10
     private double velocityX; //x velocity, depends on angle
     private double velocityY; //y velocity, depends on angle
 
 
-    public Ball(double angle, double x, double y, int radius) {
+    public Ball(double angle, double speed, double x, double y, int width, int height) {
+        super(x, y, width, height);
         this.angle = angle;
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
+        this.speed = speed;
 
         double angleInRadians = Math.toRadians(angle);
         this.velocityX = speed * Math.cos(angleInRadians);  // Horizontal component
         this.velocityY = speed * Math.sin(angleInRadians);  // Vertical component
     }
-
-    public int getRadius() {
-        return radius;
-    }
-
 
 
     public double updateX() {
@@ -51,12 +41,11 @@ public class Ball extends Ellipse2D.Double {
         }
     }
 
-    public boolean collides() {
-        //checks if ball collides with a wall
-        return x + radius >= width || x - radius <= 0
-                ||  y - radius <= 0 || y + radius >= height;
-
-    }
+//    public boolean collides() {
+//        return x + width >= width || x - radius <= 0
+//                ||  y - radius <= 0 || y + radius >= height;
+//
+//    }
 
 
 }
