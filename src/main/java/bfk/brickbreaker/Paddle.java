@@ -16,12 +16,12 @@ public class Paddle {
     }
 
 
-    public void movePanel(MouseEvent e, Boolean isMoving, int changeX, int changeY) {
+    public void movePaddle(MouseEvent e, Boolean isMoving, int changeX) {
         if (isMoving) {
             int currX = e.getXOnScreen();
             int currY = e.getYOnScreen();
 
-            setLocation(currX - changeX, currY - changeY);
+            setLocation(currX - changeX, y);
         }
     }
 

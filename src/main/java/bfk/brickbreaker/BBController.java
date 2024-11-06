@@ -1,6 +1,5 @@
 package bfk.brickbreaker;
 
-
 import javax.swing.*;
 
 import static bfk.brickbreaker.Direction.*;
@@ -42,10 +41,8 @@ public class BBController{
                 } else if (newY + radius >= ball.getHeight()) {
                     timer.stop();
                 }
+                ball.bounce(direction);
 
-                if (direction != NONE) {
-                    ball.bounce(direction);
-                }
             }
 
             hitPaddle();
