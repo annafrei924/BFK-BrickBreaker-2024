@@ -36,6 +36,7 @@ public class Brick extends Rectangle {
     }
 
     //randomly populate top row with new bricks
+
     private void populateBricks() {
         for (int col = 0; col < getWidth(); col++) {
             if (rand.nextDouble() < 1.0 / 2.0) {
@@ -45,16 +46,19 @@ public class Brick extends Rectangle {
     }
 
     //brick disappears when it gets hit
+
     public void brickHit(int x, int y) {
         bricks[x][y] = 0;
     }
 
     //is there a brick?
+
     public boolean isBrick(int x, int y) {
         return bricks[x][y] == 1;
     }
 
     //all bricks move down and top row is repopulated
+
     private void newRound() {
         for (int i = bricks.length - 2; i >= 0; i--) {
             for (int j = 0; j < bricks[0].length; j++) {
