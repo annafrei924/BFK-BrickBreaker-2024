@@ -37,7 +37,6 @@ public class Brick extends Rectangle {
 
     //randomly populate top row with new bricks
     private void populateBricks() {
-        Random rand = new Random();
         for (int col = 0; col < getWidth(); col++) {
             if (rand.nextDouble() < 1.0 / 2.0) {
                 bricks[0][col] = 1;

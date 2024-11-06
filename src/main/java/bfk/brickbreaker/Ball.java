@@ -3,7 +3,7 @@ package bfk.brickbreaker;
 import java.awt.geom.Ellipse2D;
 
 public class Ball extends Ellipse2D.Double {
-    private double angle = 45; //launch angle, start at 45
+    private double angle; //launch angle, start at 45
     private final int width; //not sure
     private final int height; //not sure
     private final double SPEED = 10; //speed, start at 10
