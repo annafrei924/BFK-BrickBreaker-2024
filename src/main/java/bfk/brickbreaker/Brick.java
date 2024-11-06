@@ -43,10 +43,12 @@ public class Brick extends Rectangle {
             }
         }
     }
+
     //brick disappears when it gets hit
     public void brickHit(int x, int y) {
         bricks[x][y] = 0;
     }
+
     //is there a brick?
     public boolean isBrick(int x, int y) {
         return bricks[x][y] == 1;

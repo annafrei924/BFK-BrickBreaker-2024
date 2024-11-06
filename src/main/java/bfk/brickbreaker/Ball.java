@@ -6,7 +6,7 @@ public class Ball extends Ellipse2D.Double {
     private double angle; //launch angle, start at 45
     private final int width; //not sure
     private final int height; //not sure
-    private final double SPEED = 10; //speed, start at 10
+    private final double speed = 10; //speed, start at 10
     private final int radius; //radius of ball
 
     private double x; //x location
@@ -24,8 +24,8 @@ public class Ball extends Ellipse2D.Double {
         this.radius = radius;
 
         double angleInRadians = Math.toRadians(angle);
-        this.velocityX = SPEED * Math.cos(angleInRadians);  // Horizontal component
-        this.velocityY = SPEED * Math.sin(angleInRadians);  // Vertical component
+        this.velocityX = speed * Math.cos(angleInRadians);  // Horizontal component
+        this.velocityY = speed * Math.sin(angleInRadians);  // Vertical component
     }
 
     public double getWidth() {
@@ -39,11 +39,13 @@ public class Ball extends Ellipse2D.Double {
     public int getRadius() {
         return radius;
     }
+
     //x is updated and new position is returned
     public double updateX() {
         x += velocityX;
         return x;
     }
+
     //y is updated and new position is return
     public double updateY() {
         y += velocityY;
@@ -52,15 +54,17 @@ public class Ball extends Ellipse2D.Double {
 
     // velocity will change --> angle will change on collision
     public void bounce(Direction direction) {
-        switch(direction) {
+        switch(direction){
             case LEFT, RIGHT -> velocityX = -velocityX;
             case TOP, PADDLE -> velocityY = -velocityY;
+            default -> {}
         }
     }
 
     //checks if ball collides with a wall
     public boolean collides() {
-        if (x + radius >= width || x - radius <= 0 ||  y - radius <= 0 || y + radius >= height) {
+        if (x + radius >= width || x - radius <= 0
+                ||  y - radius <= 0 || y + radius >= height) {
             return true;
         }
         else {

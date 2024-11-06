@@ -11,6 +11,7 @@ public class BBController{
     private final Paddle paddle;
     private final BBComponent view;
     private Timer timer;
+
     public BBController(Ball ball, Brick brick, Paddle paddle, BBComponent view) {
         this.ball = ball;
         this.brick = brick;
@@ -56,6 +57,7 @@ public class BBController{
     public void hitPaddle() {
 
     }
+
     //makes brick disapper
     public void breakBricks() {
         double ballX = ball.getX();
