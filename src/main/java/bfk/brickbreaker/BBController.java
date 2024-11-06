@@ -12,6 +12,7 @@ public class BBController{
     private final BBComponent view;
     private Timer timer;
 
+
     public BBController(Ball ball, Brick brick, Paddle paddle, BBComponent view) {
         this.ball = ball;
         this.brick = brick;
@@ -19,10 +20,9 @@ public class BBController{
         this.view = view;
     }
 
-    //ball motion and ball changes direction
 
     public void gamePlay() {
-
+        //ball motion and ball changes direction
         timer = new Timer(10, e -> {
             double newX = ball.updateX();
             double newY = ball.updateY();
@@ -59,8 +59,9 @@ public class BBController{
 
     }
 
-    //makes brick disapper
+
     public void breakBricks() {
+        //makes brick disapper
         double ballX = ball.getX();
         double ballY = ball.getY();
 
