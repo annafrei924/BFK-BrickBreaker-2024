@@ -57,7 +57,27 @@ public class BBController{
     }
 
     public void breakBricks() {
+        double ballX = ball.getX();
+        double ballY = ball.getY();
 
+        for (int x = 0; x < brick.getHeight(); x++) {
+            for (int y = 0; y < brick.getWidth(); y++) {
+                if (brick.isBrick(x, y)) {
+                    int brickX = x * 30;
+                    int brickY = y * 18;
+
+                    if (ballX >= brickX && ballX <= brickX + 30
+                            && ballCenterY >= brickY && ballCenterY <= brickY + 18) {
+
+                        brick.hitBrick(i, j);
+
+                        ball.bounce();
+
+                        view.repaint();
+                    }
+                }
+            }
+        }
     }
 }
 
