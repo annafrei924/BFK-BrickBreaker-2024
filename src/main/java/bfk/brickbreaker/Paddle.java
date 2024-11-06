@@ -8,7 +8,7 @@ public class Paddle {
     private int x;
     private int y;
 
-    public Paddle(int width, int height) {
+    public Paddle(int width, int height, int x, int y) {
         this.width = width;
         this.height = height;
         this.x = x;
