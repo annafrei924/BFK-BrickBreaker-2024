@@ -27,6 +27,14 @@ public class Brick extends Rectangle {
         return bricks.length;
     }
 
+    public int getCols() {
+        return cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
     //randomly populate top row with new bricks
     private void populateBricks() {
         Random rand = new Random();
@@ -37,7 +45,7 @@ public class Brick extends Rectangle {
         }
     }
     //brick disappears when it gets hit
-    private void brickHit(int x, int y) {
+    public void brickHit(int x, int y) {
         bricks[x][y] = 0;
     }
     //is there a brick?

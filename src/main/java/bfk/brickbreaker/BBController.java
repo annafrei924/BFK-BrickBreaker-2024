@@ -18,6 +18,7 @@ public class BBController{
         this.view = view;
     }
 
+    //ball motion and ball changes direction
     public void gamePlay() {
 
         timer = new Timer(10, e -> {
@@ -45,17 +46,17 @@ public class BBController{
                 }
             }
 
-            hitPanel();
+            hitPaddle();
             breakBricks();
         });
 
         timer.start();
     }
 
-    public void hitPanel() {
+    public void hitPaddle() {
 
     }
-
+    //makes brick disapper
     public void breakBricks() {
         double ballX = ball.getX();
         double ballY = ball.getY();
@@ -63,17 +64,17 @@ public class BBController{
         for (int x = 0; x < brick.getHeight(); x++) {
             for (int y = 0; y < brick.getWidth(); y++) {
                 if (brick.isBrick(x, y)) {
-                    int brickX = x * 30;
-                    int brickY = y * 18;
+                    int brickX = x * brick.getCols();
+                    int brickY = y * brick.getRows();
 
-                    if (ballX >= brickX && ballX <= brickX + 30
-                            && ballCenterY >= brickY && ballCenterY <= brickY + 18) {
+                    if (ballX >= brickX && ballX <= brickX + brick.getCols()
+                            && ballX >= brickY && ballY <= brickY + brick.getRows()) {
 
-                        brick.hitBrick(i, j);
+                        brick.brickHit(x, y);
 
-                        ball.bounce();
+                        ball.bounce(TOP);
 
-                        view.repaint();
+                        //view.repaint();
                     }
                 }
             }
