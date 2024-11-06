@@ -20,13 +20,18 @@ public class BBComponent extends JComponent {
         super.paintComponent(g);
         g.setColor(Color.white);
         g.fillRect(0, 0, getWidth(), getHeight());
+
         g.setColor(Color.blue);
+
         for (int y = 0; y < brick.getCols(); y++) {
             for (int x = 0; x < brick.getRows(); x++) {
-                g.fillRect(x, y, (int) brick.getWidth(), (int) brick.getHeight());
-                brick.initialPopulate();
+                if (brick.isBrick(x, y)) {
+                    System.out.println("Is brick");
+                    g.fillRect(x * 30, y* 18, 30, 18);
+                }
             }
         }
+
 
         g.setColor(Color.black);
         g.fillOval((int) ball.updateX(), (int) ball.updateY(), (int) ball.getWidth(), (int) ball.getHeight());
