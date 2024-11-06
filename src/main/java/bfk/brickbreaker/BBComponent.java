@@ -23,6 +23,12 @@ public class BBComponent extends JComponent {
 
         brick.initialPopulate();
 
+        g.setColor(Color.black);
+        g.fillOval((int) ball.getX(), (int) ball.getY(), (int) ball.getWidth(), (int) ball.getHeight());
+
+        g.setColor(Color.red);
+        g.fillRect(paddle.getX(), paddle.getY(), paddle.getWidth(), paddle.getHeight());
+
     }
 
 }

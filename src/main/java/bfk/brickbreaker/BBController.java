@@ -27,7 +27,7 @@ public class BBController{
             double newX = ball.updateX();
             double newY = ball.updateY();
 
-            //view.repaint();
+            view.repaint();
 
             Direction direction = NONE;
 
@@ -78,7 +78,7 @@ public class BBController{
 
                         ball.bounce(TOP);
 
-                        //view.repaint();
+                        view.repaint();
                     }
                 }
             }
