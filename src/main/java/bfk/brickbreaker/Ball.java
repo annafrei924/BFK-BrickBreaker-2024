@@ -60,7 +60,7 @@ public class Ball extends Ellipse2D.Double {
         switch(direction){
             case LEFT, RIGHT -> velocityX = -velocityX;
             case TOP, PADDLE -> velocityY = -velocityY;
-            default -> {}
+            default -> { }
         }
     }
 
