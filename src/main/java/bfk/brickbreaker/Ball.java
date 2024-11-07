@@ -41,9 +41,9 @@ public class Ball extends Ellipse2D.Double {
         }
     }
 
-//    public boolean collides() {
-//        return x + width >= width || x - radius <= 0
-//                ||  y - radius <= 0 || y + radius >= height;
+//   public boolean collides() {
+//   return x + width >= width || x - radius <= 0
+//   ||  y - radius <= 0 || y + radius >= height;
 //
 //    }
 

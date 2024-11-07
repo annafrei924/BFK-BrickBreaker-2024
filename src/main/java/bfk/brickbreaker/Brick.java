@@ -9,16 +9,5 @@ public class Brick extends Rectangle {
         super(x, y, width, height);
     }
 
-//    public void initialPopulate() {
-//        for (int col = 0; col < getCols(); col++) {
-//            for (int row = 0; row < 4; row++) {
-//                if (rand.nextDouble() < 1.0 / 4.0) {
-//                    bricks[row][col] = 1;
-//                }
-//            }
-//        }
-//    }
-//
-
 }
 

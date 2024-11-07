@@ -31,15 +31,15 @@ public class BBFrame extends JFrame {
 
         for (int i = 0; i < bricks.length; i++) {
             boolean overlap;
-            int x, y;
+            int x;
+            int y;
             do {
-                x = rand.nextInt(getWidth() - BRICK_WIDTH);  // Random x position (within the board width)
-                y = rand.nextInt((int) ((getHeight() * 0.66) - BRICK_HEIGHT));  // Random y position (within the board height)
+                x = rand.nextInt(getWidth() - BRICK_WIDTH);
+                y = rand.nextInt((int) ((getHeight() * 0.66) - BRICK_HEIGHT));
 
                 // Check if the new brick overlaps with any existing brick
                 overlap = false;
                 for (int j = 0; j < i; j++) {
-                    // Check for overlap (this is a simple bounding box check)
                     if (bricks[j].intersects(x, y, BRICK_WIDTH, BRICK_HEIGHT)) {
                         overlap = true;
                         break;

@@ -10,9 +10,6 @@ public class BBComponent extends JComponent {
     private Paddle paddle;
     private Brick[] bricks;
 
-    // Constants for the grid layout and brick size
-
-
     public BBComponent(Ball ball, Paddle paddle, Brick[] bricks) {
         this.ball = ball;
         this.paddle = paddle;
