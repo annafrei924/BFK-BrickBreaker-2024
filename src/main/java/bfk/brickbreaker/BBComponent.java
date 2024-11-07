@@ -2,75 +2,44 @@ package bfk.brickbreaker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Array;
+import java.util.Random;
 
 public class BBComponent extends JComponent {
 
     private Ball ball;
     private Paddle paddle;
     private Brick[] bricks;
-    private int width;
-    private int height;
 
-    public BBComponent(Ball ball, Paddle paddle, Brick[] bricks, int width, int height) {
+    // Constants for the grid layout and brick size
+
+
+    public BBComponent(Ball ball, Paddle paddle, Brick[] bricks) {
         this.ball = ball;
         this.paddle = paddle;
         this.bricks = bricks;
-        this.width = width;
-        this.height = height;
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-
         super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
         g.setColor(Color.white);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.fillRect(0, 0, getWidth(), getHeight());  // Clear the screen
 
-
+        // Draw the bricks
         g.setColor(Color.blue);
-
-        int brickWidth = 30;
-        int brickHeight = 60;
-
-        int numCols = width / brickWidth;
-
-        bricks = new Brick[15];
-
-        for (int i = 0; i < bricks.length; i++) {
-            int row = i / numCols;
-            int col = i % numCols;
-
-            int x = col * brickWidth;
-            if (row % 2 != 0) {
-                x += brickWidth / 2;
-            }
-            int y = row * brickHeight + 10;
-
-            bricks[i] = new Brick(x, y, brickWidth, brickHeight);
+        for (Brick brick : bricks) {
+            g2.fill(brick);  // Draw the brick
         }
 
-        // Optional: Print the positions of each brick (for testing purposes)
-        for (int i = 0; i < bricks.length; i++) {
-            System.out.println("Brick " + (i + 1) + " at (" + bricks[i].getX() + ", " + bricks[i].getY() + ")");
-        }
-
-        for (int i = 0; i < bricks.length; i++) {
-            g2.draw(bricks[i]);
-        }
-
-
-
-
+        // Draw the ball
         g.setColor(Color.black);
         g2.fill(ball);
 
+        // Draw the paddle
         g.setColor(Color.red);
         g2.fill(paddle);
-
     }
-
-
-
 }

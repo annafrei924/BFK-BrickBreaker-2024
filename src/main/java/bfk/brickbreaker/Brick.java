@@ -19,26 +19,6 @@ public class Brick extends Rectangle {
 //        }
 //    }
 //
-//    public void populateBricks() {
-//        //randomly populate top row with new bricks
-//        for (int col = 0; col < getWidth(); col++) {
-//            if (rand.nextBoolean()) {
-//                bricks[0][col] = 1;
-//            }
-//        }
-//    }
-//    private void newRound() {
-//        //all bricks move down and top row is repopulated
-//        for (int i = bricks.length - 2; i >= 0; i--) {
-//            for (int j = 0; j < bricks[0].length; j++) {
-//                if (bricks[i][j] == 1) {
-//                    bricks[i + 1][j] = 1;
-//                    bricks[i][j] = 0;
-//                }
-//            }
-//        }
-//        populateBricks();
-//    }
 
 }
 

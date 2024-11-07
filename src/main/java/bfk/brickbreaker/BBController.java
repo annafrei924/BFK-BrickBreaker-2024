@@ -3,6 +3,7 @@ package bfk.brickbreaker;
 import javax.swing.*;
 
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 import static bfk.brickbreaker.Direction.*;
 
@@ -10,14 +11,17 @@ public class BBController{
     private final Ball ball;
     private final Paddle paddle;
     private final BBComponent view;
+    private final Brick[] bricks;
     private Timer timer;
+    // Constants for the grid size and brick size
 
-
-    public BBController(Ball ball, Paddle paddle, BBComponent view) {
+    public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
         this.ball = ball;
         this.paddle = paddle;
         this.view = view;
+        this.bricks = bricks;
     }
+
 
 //
 //    public void gamePlay() {
