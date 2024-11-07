@@ -45,13 +45,22 @@ public class BBController{
 
     public void checkCollisions() {
         if (ball.y <= 0) {
-            ball.bounce(Direction.TOP);
+            bounce(Direction.TOP);
         }
-        if (ball.x <= 0) {
-            ball.bounce(Direction.LEFT);
+        else if (ball.x <= 0) {
+            bounce(Direction.LEFT);
         }
-        if (ball.x + ball.width >= view.getWidth()) {
-            ball.bounce(Direction.RIGHT);
+        else if (ball.x + ball.width >= view.getWidth()) {
+            bounce(Direction.RIGHT);
+        }
+        else if (ball.y + ball.height >= 800) {
+            System.exit(0);
+        }
+        else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
+            bounce(Direction.BOTTOMPADDLE);
+            double ballCenterX = ball.x + ball.width / 2;
+            double paddlePosition = ballCenterX - paddle.getX();
+            //hitPaddle(paddlePosition);
         }
         else {
             // Iterate through each brick
@@ -59,7 +68,7 @@ public class BBController{
                 Brick brick = bricks[i];
                 if (brick != null) {
                     if (ball.getBounds2D().intersects(brick.getBounds2D())) {
-                        ball.bounce(Direction.BRICK);
+                        bounce(Direction.BRICK);
                         bricks[i] = null;
                         return;
                     }
@@ -68,8 +77,16 @@ public class BBController{
         }
     }
 
-    public void hitPaddle() {
+    public void hitPaddle(int paddleX) {
 
+    }
+
+    public void bounce(Direction direction) {
+        switch (direction) {
+            case TOP, BRICK -> ball.setAngle(360 - ball.getAngle());
+            case RIGHT, LEFT -> ball.setAngle(180 - ball.getAngle());
+            default -> { }
+        }
     }
 
 

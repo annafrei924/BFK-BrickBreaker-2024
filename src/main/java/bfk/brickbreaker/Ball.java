@@ -29,15 +29,15 @@ public class Ball extends Ellipse2D.Double {
         this.y = newY;
     }
 
-
-    public void bounce(Direction direction) {
-        switch (direction) {
-            case TOP, BRICK -> angle = 360 - angle;
-            case RIGHT, LEFT -> angle = 180 - angle;
-            case BOTTOMPADDLE -> { }
-            default -> { }
-        }
+    public double getAngle() {
+        return angle;
     }
+
+    public void setAngle(double newAngle) {
+        angle = newAngle;
+    }
+
+
 
 
 }
