@@ -80,8 +80,7 @@ public class BBController{
     public void hitPaddle(double paddleX) {
         if (paddleX < paddle.width / 4 ) {
             ball.setAngle(325);
-        }
-        else if (paddleX < paddle.width / 2) {
+        } else if (paddleX < paddle.width / 2) {
             ball.setAngle(290);
         }
         else if (paddleX == paddle.width / 2) {
