@@ -10,7 +10,7 @@ public class BBFrame extends JFrame {
     private static final int NUM_BRICKS = 20;
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 20;
-    Ball ball = new Ball(45, 10, 295, 720, 10, 10);
+    Ball ball = new Ball(90, 5, 295, 720, 20, 20);
     Paddle paddle = new Paddle(250, 740, 100, 20);
     Brick[] bricks = new Brick[NUM_BRICKS];
 

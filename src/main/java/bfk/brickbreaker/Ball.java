@@ -3,26 +3,24 @@ package bfk.brickbreaker;
 import java.awt.geom.Ellipse2D;
 
 public class Ball extends Ellipse2D.Double {
-    private double angle; //launch angle, start at 45
-    private double speed = 10; //speed, start at 10
-
-    double angleInRadians = Math.toRadians(angle);
+    private double angle;
+    private double speed; //speed, start at 10
 
     public Ball(double angle, double speed, double x, double y, int width, int height) {
         super(x, y, width, height);
-        this.angle = angle;
+        this.angle = 360 - angle;
         this.speed = speed;
 
     }
 
 
     public double updateX() {
-        x += speed * Math.cos(angleInRadians);;
+        x += speed * Math.cos(Math.toRadians(angle));
         return x;
     }
 
     public double updateY() {
-        y += speed * Math.sin(angleInRadians);
+        y += speed * Math.sin(Math.toRadians(angle));
         return y;
     }
 
