@@ -22,8 +22,6 @@ public class BBController{
         this.bricks = bricks;
     }
 
-
-
     public void gamePlay() {
 
         //ball motion and ball changes direction
@@ -57,8 +55,7 @@ public class BBController{
             double ballCenterX = ball.x + ball.width / 2;
             double paddlePosition = ballCenterX - paddle.getX();
             hitPaddle(paddlePosition);
-        }
-        else {
+        } else {
             // Iterate through each brick
             for (int i = 0; i < bricks.length; i++) {
                 Brick brick = bricks[i];
