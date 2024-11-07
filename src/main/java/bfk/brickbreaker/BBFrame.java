@@ -10,8 +10,8 @@ public class BBFrame extends JFrame {
     private static final int NUM_BRICKS = 20;
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 20;
-    Ball ball = new Ball(45, 5, 295, 720, 20, 20);
-    Paddle paddle = new Paddle(250, 740, 100, 20);
+    Ball ball = new Ball(45, 5, 295, 670, 20, 20);
+    Paddle paddle = new Paddle(250, 690, 100, 20);
     Brick[] bricks = new Brick[NUM_BRICKS];
 
     public BBFrame() {
@@ -23,15 +23,21 @@ public class BBFrame extends JFrame {
 
         BBComponent bbComponent = new BBComponent(ball, paddle, bricks);
         BBController bbController = new BBController(ball, paddle, bbComponent, bricks);
+        JButton startButton = new JButton("Start");
+        startButton.addActionListener(e -> {
+            bbController.gamePlay();
+            requestFocusInWindow();
+        });
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(startButton);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         add(bbComponent, BorderLayout.CENTER);
-        bbController.gamePlay();
-
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
-
                 if (keyCode == KeyEvent.VK_LEFT) {
                     paddle.moveLeft();
                 } else if (keyCode == KeyEvent.VK_RIGHT) {
@@ -40,10 +46,6 @@ public class BBFrame extends JFrame {
                 repaint();
             }
         });
-
-
-
-        // Make sure the frame can get key events by setting focusable
         setFocusable(true);
 
     }

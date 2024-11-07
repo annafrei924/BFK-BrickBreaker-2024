@@ -30,7 +30,6 @@ public class BBController{
             double newX = ball.updateX();
             double newY = ball.updateY();
 
-            ball.setPosition(newX, newY);
             ball.setFrame(newX, newY, ball.width, ball.height);
             checkCollisions();
 
