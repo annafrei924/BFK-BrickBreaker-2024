@@ -21,16 +21,22 @@ public class Ball extends Ellipse2D.Double {
 
 
     public double updateX() {
-        //x is updated and new position is returned
         x += velocityX;
+        setFrame(x, y, getWidth(), getHeight());  // Update the frame after modifying x
         return x;
     }
 
     public double updateY() {
-        //y is updated and new position is return
         y += velocityY;
+        setFrame(x, y, getWidth(), getHeight());  // Update the frame after modifying y
         return y;
     }
+
+    public void setPosition(double newX, double newY) {
+        this.x = newX;
+        this.y = newY;
+    }
+
 
     public void bounce(Direction direction) {
         // velocity will change --> angle will change on collision
@@ -40,12 +46,6 @@ public class Ball extends Ellipse2D.Double {
             default -> { }
         }
     }
-
-//   public boolean collides() {
-//   return x + width >= width || x - radius <= 0
-//   ||  y - radius <= 0 || y + radius >= height;
-//
-//    }
 
 
 }

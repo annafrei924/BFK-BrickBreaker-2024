@@ -23,52 +23,32 @@ public class BBController{
     }
 
 
-//
-//    public void gamePlay() {
-//
-//        //ball motion and ball changes direction
-//        timer = new Timer(10, e -> {
-//            double newX = ball.updateX();
-//            double newY = ball.updateY();
-//
-//            view.repaint();
-//
-//            Direction direction = NONE;
-//
-////            if (ball.collides()) {
-////                int radius = ball.getRadius();
-////                if (newX - radius <= 0) {
-////                    direction = LEFT;
-////                } else if (newX + radius >= ball.getWidth()) {
-////                    direction = RIGHT;
-////                } else if (newY - radius <= 0) {
-////                    direction = TOP;
-////                } else if (newY + radius >= ball.getHeight()) {
-////                    timer.stop();
-////                }
-////                ball.bounce(direction);
-////
-////            }
-//
-//            hitPaddle();
-//            breakBricks();
-//        });
-//
-//        timer.start();
-//    }
-//
-//    public void hitPaddle() {
-//
-//    }
-//
-//    public void movePaddle(MouseEvent e, Boolean isMoving, int changeX) {
-//        if (isMoving) {
-//            int currX = e.getXOnScreen();
-//            setLocation(currX - changeX, y);
-//        }
-//    }
-//
-//
+
+    public void gamePlay() {
+
+        //ball motion and ball changes direction
+        timer = new Timer(1000 / 60, e -> {
+
+            double newX = ball.locationX();
+            double newY = ball.locationY();
+
+            ball.setPosition(newX, newY);
+            view.repaint();
+            double newX = ball.updateX();
+            double newY = ball.updateY();
+            ball.setFrame(newX, newY, ball.getWidth(), ball.getHeight());  // Correctly update position
+            view.repaint();
+        });
+
+        timer.start();
+    }
+
+    public void hitPaddle() {
+
+    }
+
+
+
 //    public void breakBricks() {
 //        //makes brick disapper
 //        double ballX = ball.getX();
@@ -93,5 +73,6 @@ public class BBController{
 //            }
 //        }
 //    }
+
 }
 

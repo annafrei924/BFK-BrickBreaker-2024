@@ -7,12 +7,12 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class BBFrame extends JFrame {
+    private static final int NUM_BRICKS = 20;
+    private static final int BRICK_WIDTH = 60;
+    private static final int BRICK_HEIGHT = 20;
     Ball ball = new Ball(45, 10, 295, 720, 10, 10);
     Paddle paddle = new Paddle(250, 740, 100, 20);
-    Brick[] bricks = new Brick[20];
-    private static final int BRICK_WIDTH = 60;  // Brick width (in pixels)
-    private static final int BRICK_HEIGHT = 20;  // Brick height (in pixels)
-    private static final int NUM_BRICKS = 20;  // Number of bricks
+    Brick[] bricks = new Brick[NUM_BRICKS];
 
     public BBFrame() {
         setTitle("Brick Breaker");
@@ -25,6 +25,7 @@ public class BBFrame extends JFrame {
         BBController bbController = new BBController(ball, paddle, bbComponent, bricks);
 
         add(bbComponent, BorderLayout.CENTER);
+        bbController.gamePlay();
 
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -40,6 +41,8 @@ public class BBFrame extends JFrame {
             }
         });
 
+
+
         // Make sure the frame can get key events by setting focusable
         setFocusable(true);
 
@@ -47,7 +50,6 @@ public class BBFrame extends JFrame {
 
     public void initializeBricks() {
         Random rand = new Random();
-
         for (int i = 0; i < bricks.length; i++) {
             boolean overlap;
             int x;
@@ -65,7 +67,6 @@ public class BBFrame extends JFrame {
                     }
                 }
             } while (overlap);
-
             bricks[i] = new Brick(x, y, BRICK_WIDTH, BRICK_HEIGHT);
         }
     }
