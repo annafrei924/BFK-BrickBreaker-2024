@@ -34,44 +34,33 @@ public class BBController{
 
             ball.setPosition(newX, newY);
             ball.setFrame(newX, newY, ball.width, ball.height);
+            checkBrickCollisions();
+
+
             view.repaint();
         });
 
         timer.start();
     }
 
+    public void checkBrickCollisions() {
+        // Iterate through each brick
+        for (int i = 0; i < bricks.length; i++) {
+            Brick brick = bricks[i];
+
+            if (ball.getBounds2D().intersects(brick.getBounds2D())) {
+                // Handle the collision (e.g., bounce, remove brick, etc.)
+                ball.bounce(Direction.BRICK); // Bounce the ball off the brick
+                bricks[i] = null;  // Remove the brick (set to null or any other method of removal)
+            }
+        }
+    }
+
     public void hitPaddle() {
 
     }
 
-    
 
-
-
-//    public void breakBricks() {
-//        //makes brick disapper
-//        double ballX = ball.getX();
-//        double ballY = ball.getY();
-//
-//        for (int x = 0; x < brick.getHeight(); x++) {
-//            for (int y = 0; y < brick.getWidth(); y++) {
-//                if (brick.isBrick(x, y)) {
-//                    int brickX = x * brick.getCols();
-//                    int brickY = y * brick.getRows();
-//
-//                    if (ballX >= brickX && ballX <= brickX + brick.getCols()
-//                            && ballX >= brickY && ballY <= brickY + brick.getRows()) {
-//
-//                        brick.brickHit(x, y);
-//
-//                        ball.bounce(TOP);
-//
-//                        view.repaint();
-//                    }
-//                }
-//            }
-//        }
-//    }
 
 }
 
