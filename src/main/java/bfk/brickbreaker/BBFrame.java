@@ -2,6 +2,8 @@ package bfk.brickbreaker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class BBFrame extends JFrame {
@@ -23,6 +25,23 @@ public class BBFrame extends JFrame {
         BBController bbController = new BBController(ball, paddle, bbComponent, bricks);
 
         add(bbComponent, BorderLayout.CENTER);
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+
+                if (keyCode == KeyEvent.VK_LEFT) {
+                    paddle.moveLeft();
+                } else if (keyCode == KeyEvent.VK_RIGHT) {
+                    paddle.moveRight();
+                }
+                repaint();
+            }
+        });
+
+        // Make sure the frame can get key events by setting focusable
+        setFocusable(true);
 
     }
 
