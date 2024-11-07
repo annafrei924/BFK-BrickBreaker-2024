@@ -33,6 +33,7 @@ public class BBController{
             double newY = ball.updateY();
 
             ball.setPosition(newX, newY);
+            ball.setFrame(newX, newY, ball.width, ball.height);
             view.repaint();
         });
 
