@@ -46,17 +46,13 @@ public class BBController{
     public void checkCollisions() {
         if (ball.y <= 0) {
             bounce(Direction.TOP);
-        }
-        else if (ball.x <= 0) {
+        } else if (ball.x <= 0) {
             bounce(Direction.LEFT);
-        }
-        else if (ball.x + ball.width >= view.getWidth()) {
+        } else if (ball.x + ball.width >= view.getWidth()) {
             bounce(Direction.RIGHT);
-        }
-        else if (ball.y + ball.height >= 800) {
+        } else if (ball.y + ball.height >= 800) {
             System.exit(0);
-        }
-        else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
+        } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double ballCenterX = ball.x + ball.width / 2;
             double paddlePosition = ballCenterX - paddle.getX();
@@ -78,18 +74,15 @@ public class BBController{
     }
 
     public void hitPaddle(double paddleX) {
-        if (paddleX < paddle.width / 4 ) {
+        if (paddleX < paddle.width / 4) {
             ball.setAngle(325);
         } else if (paddleX < paddle.width / 2) {
             ball.setAngle(290);
-        }
-        else if (paddleX == paddle.width / 2) {
+        } else if (paddleX == paddle.width / 2) {
             ball.setAngle(90);
-        }
-        else if (paddleX < paddle.width / (0.75)) {
+        } else if (paddleX < paddle.width / (0.75)) {
             ball.setAngle(250);
-        }
-        else {
+        } else {
             ball.setAngle(215);
         }
 
@@ -102,8 +95,6 @@ public class BBController{
             default -> { }
         }
     }
-
-
 
 }
 
