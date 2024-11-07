@@ -29,14 +29,10 @@ public class BBController{
         //ball motion and ball changes direction
         timer = new Timer(1000 / 60, e -> {
 
-            double newX = ball.locationX();
-            double newY = ball.locationY();
-
-            ball.setPosition(newX, newY);
-            view.repaint();
             double newX = ball.updateX();
             double newY = ball.updateY();
-            ball.setFrame(newX, newY, ball.getWidth(), ball.getHeight());  // Correctly update position
+
+            ball.setPosition(newX, newY);
             view.repaint();
         });
 

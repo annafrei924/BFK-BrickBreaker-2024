@@ -22,13 +22,11 @@ public class Ball extends Ellipse2D.Double {
 
     public double updateX() {
         x += velocityX;
-        setFrame(x, y, getWidth(), getHeight());  // Update the frame after modifying x
         return x;
     }
 
     public double updateY() {
         y += velocityY;
-        setFrame(x, y, getWidth(), getHeight());  // Update the frame after modifying y
         return y;
     }
 
