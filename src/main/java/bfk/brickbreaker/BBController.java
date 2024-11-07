@@ -47,11 +47,12 @@ public class BBController{
         // Iterate through each brick
         for (int i = 0; i < bricks.length; i++) {
             Brick brick = bricks[i];
-
-            if (ball.getBounds2D().intersects(brick.getBounds2D())) {
-                // Handle the collision (e.g., bounce, remove brick, etc.)
-                ball.bounce(Direction.BRICK); // Bounce the ball off the brick
-                bricks[i] = null;  // Remove the brick (set to null or any other method of removal)
+            if (brick != null) {
+                if (ball.getBounds2D().intersects(brick.getBounds2D())) {
+                    ball.bounce(Direction.BRICK);
+                    bricks[i] = null;
+                    return;
+                }
             }
         }
     }

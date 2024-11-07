@@ -32,7 +32,7 @@ public class Ball extends Ellipse2D.Double {
 
     public void bounce(Direction direction) {
         switch (direction) {
-            case LEFT, RIGHT, TOP, BRICK -> angle = 180 - angle;
+            case LEFT, RIGHT, TOP, BRICK -> angle = 360 - angle;
             case BOTTOMPADDLE -> { }
             default -> { }
         }
