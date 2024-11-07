@@ -60,7 +60,7 @@ public class BBController{
             bounce(Direction.BOTTOMPADDLE);
             double ballCenterX = ball.x + ball.width / 2;
             double paddlePosition = ballCenterX - paddle.getX();
-            //hitPaddle(paddlePosition);
+            hitPaddle(paddlePosition);
         }
         else {
             // Iterate through each brick
@@ -77,7 +77,22 @@ public class BBController{
         }
     }
 
-    public void hitPaddle(int paddleX) {
+    public void hitPaddle(double paddleX) {
+        if (paddleX < paddle.width / 4 ) {
+            ball.setAngle(325);
+        }
+        else if (paddleX < paddle.width / 2) {
+            ball.setAngle(290);
+        }
+        else if (paddleX == paddle.width / 2) {
+            ball.setAngle(90);
+        }
+        else if (paddleX < paddle.width / (0.75)) {
+            ball.setAngle(250);
+        }
+        else {
+            ball.setAngle(215);
+        }
 
     }
 
