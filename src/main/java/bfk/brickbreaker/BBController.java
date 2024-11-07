@@ -34,7 +34,7 @@ public class BBController{
 
             ball.setPosition(newX, newY);
             ball.setFrame(newX, newY, ball.width, ball.height);
-            checkBrickCollisions();
+            checkCollisions();
 
 
             view.repaint();
@@ -43,15 +43,26 @@ public class BBController{
         timer.start();
     }
 
-    public void checkBrickCollisions() {
-        // Iterate through each brick
-        for (int i = 0; i < bricks.length; i++) {
-            Brick brick = bricks[i];
-            if (brick != null) {
-                if (ball.getBounds2D().intersects(brick.getBounds2D())) {
-                    ball.bounce(Direction.BRICK);
-                    bricks[i] = null;
-                    return;
+    public void checkCollisions() {
+        if (ball.y <= 0) {
+            ball.bounce(Direction.TOP);
+        }
+        if (ball.x <= 0) {
+            ball.bounce(Direction.LEFT);
+        }
+        if (ball.x + ball.width >= view.getWidth()) {
+            ball.bounce(Direction.RIGHT);
+        }
+        else {
+            // Iterate through each brick
+            for (int i = 0; i < bricks.length; i++) {
+                Brick brick = bricks[i];
+                if (brick != null) {
+                    if (ball.getBounds2D().intersects(brick.getBounds2D())) {
+                        ball.bounce(Direction.BRICK);
+                        bricks[i] = null;
+                        return;
+                    }
                 }
             }
         }
