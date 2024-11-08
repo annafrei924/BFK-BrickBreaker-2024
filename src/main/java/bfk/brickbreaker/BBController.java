@@ -22,76 +22,75 @@ public class BBController{
         this.bricks = bricks;
     }
 
+    public void gamePlay() {
 
-//
-//    public void gamePlay() {
-//
-//        //ball motion and ball changes direction
-//        timer = new Timer(10, e -> {
-//            double newX = ball.updateX();
-//            double newY = ball.updateY();
-//
-//            view.repaint();
-//
-//            Direction direction = NONE;
-//
-////            if (ball.collides()) {
-////                int radius = ball.getRadius();
-////                if (newX - radius <= 0) {
-////                    direction = LEFT;
-////                } else if (newX + radius >= ball.getWidth()) {
-////                    direction = RIGHT;
-////                } else if (newY - radius <= 0) {
-////                    direction = TOP;
-////                } else if (newY + radius >= ball.getHeight()) {
-////                    timer.stop();
-////                }
-////                ball.bounce(direction);
-////
-////            }
-//
-//            hitPaddle();
-//            breakBricks();
-//        });
-//
-//        timer.start();
-//    }
-//
-//    public void hitPaddle() {
-//
-//    }
-//
-//    public void movePaddle(MouseEvent e, Boolean isMoving, int changeX) {
-//        if (isMoving) {
-//            int currX = e.getXOnScreen();
-//            setLocation(currX - changeX, y);
-//        }
-//    }
-//
-//
-//    public void breakBricks() {
-//        //makes brick disapper
-//        double ballX = ball.getX();
-//        double ballY = ball.getY();
-//
-//        for (int x = 0; x < brick.getHeight(); x++) {
-//            for (int y = 0; y < brick.getWidth(); y++) {
-//                if (brick.isBrick(x, y)) {
-//                    int brickX = x * brick.getCols();
-//                    int brickY = y * brick.getRows();
-//
-//                    if (ballX >= brickX && ballX <= brickX + brick.getCols()
-//                            && ballX >= brickY && ballY <= brickY + brick.getRows()) {
-//
-//                        brick.brickHit(x, y);
-//
-//                        ball.bounce(TOP);
-//
-//                        view.repaint();
-//                    }
-//                }
-//            }
-//        }
-//    }
+        //ball motion and ball changes direction
+        timer = new Timer(1000 / 60, e -> {
+
+            double newX = ball.updateX();
+            double newY = ball.updateY();
+
+            ball.setFrame(newX, newY, ball.width, ball.height);
+            checkCollisions();
+
+
+            view.repaint();
+        });
+
+        timer.start();
+    }
+
+    public void checkCollisions() {
+        if (ball.y <= 0) {
+            bounce(Direction.TOP);
+        } else if (ball.x <= 0) {
+            bounce(Direction.LEFT);
+        } else if (ball.x + ball.width >= view.getWidth()) {
+            bounce(Direction.RIGHT);
+        } else if (ball.y + ball.height >= 800) {
+            System.exit(0);
+        } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
+            bounce(Direction.BOTTOMPADDLE);
+            double ballCenterX = ball.x + ball.width / 2;
+            double paddlePosition = ballCenterX - paddle.getX();
+            hitPaddle(paddlePosition);
+        } else {
+            // Iterate through each brick
+            for (int i = 0; i < bricks.length; i++) {
+                Brick brick = bricks[i];
+                if (brick != null) {
+                    if (ball.getBounds2D().intersects(brick.getBounds2D())) {
+                        bounce(Direction.BRICK);
+                        bricks[i] = null;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    public void hitPaddle(double paddleX) {
+        if (paddleX < paddle.width / 4) {
+            ball.setAngle(325);
+        } else if (paddleX < paddle.width / 2) {
+            ball.setAngle(290);
+        } else if (paddleX == paddle.width / 2) {
+            ball.setAngle(90);
+        } else if (paddleX < paddle.width / (0.75)) {
+            ball.setAngle(250);
+        } else {
+            ball.setAngle(215);
+        }
+
+    }
+
+    public void bounce(Direction direction) {
+        switch (direction) {
+            case TOP, BRICK -> ball.setAngle(360 - ball.getAngle());
+            case RIGHT, LEFT -> ball.setAngle(180 - ball.getAngle());
+            default -> { }
+        }
+    }
+
 }
 
