@@ -24,11 +24,6 @@ public class Ball extends Ellipse2D.Double {
         return y;
     }
 
-    public void setPosition(double newX, double newY) {
-        this.x = newX;
-        this.y = newY;
-    }
-
     public double getAngle() {
         return angle;
     }
