@@ -51,8 +51,7 @@ public class BBController{
             System.exit(0);
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
-            double ballCenterX = ball.x + ball.width / 2;
-            double paddlePosition = ballCenterX - paddle.getX();
+            double paddlePosition = ball.getCenterX() - paddle.getX();
             hitPaddle(paddlePosition);
         } else {
             // Iterate through each brick
