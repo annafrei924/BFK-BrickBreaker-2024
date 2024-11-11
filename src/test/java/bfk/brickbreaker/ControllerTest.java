@@ -2,6 +2,7 @@ package bfk.brickbreaker;
 
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,33 +12,29 @@ public class ControllerTest {
     @Test
     public void hitPaddle() {
         // Given
-        Ball ball = mock(Ball.class);
-        Paddle paddle = mock(Paddle.class);
+        Ball ball = new Ball(145, 10, 260, 680, 20, 20);
+        Paddle paddle = new Paddle(250, 690, 100, 20);
         BBComponent view = mock(BBComponent.class);
         Brick[] bricks = new Brick[20];
 
-        doReturn(20.0).when(ball).getWidth();
-        doReturn(20.0).when(ball).getHeight();
-        doReturn(200.0).when(ball).getX();
-        doReturn(690.0).when(ball).getY();
-        doReturn(100.0).when(paddle).getWidth();
-
-
         BBController controller = new BBController(ball, paddle, view, bricks);
 
-        doReturn(true).when(ball).getBounds2D().intersects(paddle.getBounds2D());
+        controller.hitPaddle(10);
+        assertEquals(325, ball.getAngle());
 
-        // When
-        controller.checkCollisions();
+        controller.hitPaddle(40);
+        assertEquals(290, ball.getAngle());
 
-        // Then
-        verify(controller).checkCollisions();
-        verify(controller).bounce(Direction.BOTTOMPADDLE);
-        verify(controller).hitPaddle(anyDouble());  // Ensure hitPaddle method is called with any double (or specific value if needed)
+        controller.hitPaddle(50);
+        assertEquals(270, ball.getAngle());
+
+        controller.hitPaddle(70);
+        assertEquals(250, ball.getAngle());
+
+        controller.hitPaddle(90);
+        assertEquals(215, ball.getAngle());
 
 
-        doReturn(325.0).when(ball).getAngle();
-        assertEquals(325.0, ball.getAngle(), 0.01);
     }
 }
 

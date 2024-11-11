@@ -26,7 +26,10 @@ public class BBController{
 
         //ball motion and ball changes direction
         timer = new Timer(1000 / 60, e -> {
-
+            System.out.println(ball.getX());
+            System.out.println(ball.x);
+            System.out.println(ball.getY());
+            System.out.println(ball.y);
             double newX = ball.updateX();
             double newY = ball.updateY();
 
@@ -74,8 +77,8 @@ public class BBController{
         } else if (paddleX < paddle.width / 2) {
             ball.setAngle(290);
         } else if (paddleX == paddle.width / 2) {
-            ball.setAngle(90);
-        } else if (paddleX < paddle.width / (0.75)) {
+            ball.setAngle(270);
+        } else if (paddleX < paddle.width * 3.0 / 4.0) {
             ball.setAngle(250);
         } else {
             ball.setAngle(215);
