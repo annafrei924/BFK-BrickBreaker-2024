@@ -42,7 +42,7 @@ public class ControllerTest {
     public void hitWall() {
         // Given
         Ball ball = new Ball(145, 10, 260, 680, 20, 20);
-        Paddle paddle = new Paddle(250, 690, 100, 20);
+        Paddle paddle = mock(Paddle.class);
         BBComponent view = mock(BBComponent.class);
 
         Brick[] bricks = new Brick[20];
@@ -73,7 +73,7 @@ public class ControllerTest {
     public void ballMoves() {
         // given
         Ball ball = new Ball(145, 10, 260, 680, 20, 20);
-        Paddle paddle = new Paddle(250, 690, 100, 20);
+        Paddle paddle = mock(Paddle.class);
         BBComponent view = mock(BBComponent.class);
         Brick[] bricks = new Brick[20];
 
