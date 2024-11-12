@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 
 public class ControllerTest {
@@ -35,6 +36,27 @@ public class ControllerTest {
         assertEquals(215, ball.getAngle());
 
 
+    }
+
+    @Test
+    public void ballMoves() {
+        // given
+        Ball ball = new Ball(145, 10, 260, 680, 20, 20);
+        Paddle paddle = new Paddle(250, 690, 100, 20);
+        BBComponent view = mock(BBComponent.class);
+        Brick[] bricks = new Brick[20];
+
+        BBController controller = new BBController(ball, paddle, view, bricks);
+
+        double initialX = ball.getX();
+        double initialY = ball.getY();
+
+        // when
+        controller.gamePlay();
+
+        // then
+        assertNotEquals(initialX, ball.updateX());
+        assertNotEquals(initialY, ball.updateY());
     }
 }
 
