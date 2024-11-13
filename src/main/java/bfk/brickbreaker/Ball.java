@@ -4,7 +4,7 @@ import java.awt.geom.Ellipse2D;
 
 public class Ball extends Ellipse2D.Double {
     private double angle;
-    private double speed; //speed, start at 10
+    private double speed;
 
     public Ball(double angle, double speed, double x, double y, int width, int height) {
         super(x, y, width, height);
@@ -24,11 +24,6 @@ public class Ball extends Ellipse2D.Double {
         return y;
     }
 
-    public void setPosition(double newX, double newY) {
-        this.x = newX;
-        this.y = newY;
-    }
-
     public double getAngle() {
         return angle;
     }
@@ -36,8 +31,5 @@ public class Ball extends Ellipse2D.Double {
     public void setAngle(double newAngle) {
         angle = newAngle;
     }
-
-
-
 
 }

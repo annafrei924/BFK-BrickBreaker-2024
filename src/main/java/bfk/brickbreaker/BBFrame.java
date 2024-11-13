@@ -25,7 +25,7 @@ public class BBFrame extends JFrame {
         BBController bbController = new BBController(ball, paddle, bbComponent, bricks);
         JButton startButton = new JButton("Start");
         startButton.addActionListener(e -> {
-            bbController.gamePlay();
+            bbController.startTimer();
             requestFocusInWindow();
         });
 

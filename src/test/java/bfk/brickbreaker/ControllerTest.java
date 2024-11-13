@@ -83,11 +83,11 @@ public class ControllerTest {
         double initialY = ball.getY();
 
         // when
-        controller.gamePlay();
+        controller.playGame();
 
         // then
-        assertNotEquals(initialX, ball.updateX());
-        assertNotEquals(initialY, ball.updateY());
+        assertNotEquals(initialX, ball.x);
+        assertNotEquals(initialY, ball.y);
     }
 }
 

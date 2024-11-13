@@ -21,8 +21,4 @@ public class Paddle extends Rectangle {
             x += speed;
         }
     }
-
-
-
-
 }

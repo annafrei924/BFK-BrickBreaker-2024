@@ -2,10 +2,6 @@ package bfk.brickbreaker;
 
 import javax.swing.*;
 
-import java.awt.event.MouseEvent;
-import java.util.Random;
-
-import static bfk.brickbreaker.Direction.*;
 
 public class BBController{
     private final Ball ball;
@@ -13,7 +9,6 @@ public class BBController{
     private final BBComponent view;
     private final Brick[] bricks;
     private Timer timer;
-    // Constants for the grid size and brick size
 
     public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
         this.ball = ball;
@@ -22,25 +17,23 @@ public class BBController{
         this.bricks = bricks;
     }
 
-    public void gamePlay() {
-
-        //ball motion and ball changes direction
+    public void startTimer() {
         timer = new Timer(1000 / 60, e -> {
-            System.out.println(ball.getX());
-            System.out.println(ball.x);
-            System.out.println(ball.getY());
-            System.out.println(ball.y);
-            double newX = ball.updateX();
-            double newY = ball.updateY();
-
-            ball.setFrame(newX, newY, ball.width, ball.height);
-            checkCollisions();
-
-
-            view.repaint();
+           playGame();
         });
 
         timer.start();
+    }
+
+    //ball moves & then checks for collisions
+    public void playGame() {
+        double newX = ball.updateX();
+        double newY = ball.updateY();
+
+        ball.setFrame(newX, newY, ball.width, ball.height);
+        checkCollisions();
+
+        view.repaint();
     }
 
     public void checkCollisions() {
@@ -83,7 +76,6 @@ public class BBController{
         } else {
             ball.setAngle(215);
         }
-
     }
 
     public void bounce(Direction direction) {
