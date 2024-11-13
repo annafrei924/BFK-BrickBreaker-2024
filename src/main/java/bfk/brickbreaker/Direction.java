@@ -5,5 +5,5 @@ public enum Direction {
     LEFT,
     TOP,
     BOTTOMPADDLE,
-    NONE
+    BRICK
 }

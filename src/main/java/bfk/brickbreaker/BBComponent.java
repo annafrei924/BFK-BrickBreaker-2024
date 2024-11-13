@@ -28,7 +28,9 @@ public class BBComponent extends JComponent {
         // Draw the bricks
         g.setColor(Color.blue);
         for (Brick brick : bricks) {
-            g2.fill(brick);  // Draw the brick
+            if (brick != null) {
+                g2.fill(brick);
+            }
         }
 
         // Draw the ball
