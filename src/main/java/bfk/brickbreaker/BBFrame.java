@@ -6,13 +6,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-public class BBFrame extends JFrame {
+public class BBFrame extends JFrame implements GameOverListener{
     private static final int NUM_BRICKS = 20;
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 20;
-    Ball ball = new Ball(45, 5, 295, 670, 20, 20);
+    private int time = 0;
+    Ball ball = new Ball(90, 5, 290, 670, 20, 20);
     Paddle paddle = new Paddle(250, 690, 100, 20);
     Brick[] bricks = new Brick[NUM_BRICKS];
+
 
     public BBFrame() {
         setTitle("Brick Breaker");
@@ -22,10 +24,10 @@ public class BBFrame extends JFrame {
         initializeBricks();
 
         BBComponent bbComponent = new BBComponent(ball, paddle, bricks);
-        BBController bbController = new BBController(ball, paddle, bbComponent, bricks);
+        BBController bbController = new BBController(ball, paddle, bbComponent, bricks, this);
         JButton startButton = new JButton("Start");
         startButton.addActionListener(e -> {
-            bbController.startTimer();
+            time = bbController.startTimer();
             requestFocusInWindow();
         });
 
@@ -71,5 +73,11 @@ public class BBFrame extends JFrame {
             } while (overlap);
             bricks[i] = new Brick(x, y, BRICK_WIDTH, BRICK_HEIGHT);
         }
+    }
+
+    @Override
+    public void gameOver(int time) {
+        this.time = time;
+        System.out.println("Game over! Timer clicks: " + time);
     }
 }

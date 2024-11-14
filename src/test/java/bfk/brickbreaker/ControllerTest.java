@@ -17,8 +17,9 @@ public class ControllerTest {
         Paddle paddle = new Paddle(250, 690, 100, 20);
         BBComponent view = mock(BBComponent.class);
         Brick[] bricks = new Brick[20];
+        GameOverListener gameOverListener = mock(GameOverListener.class);
 
-        BBController controller = new BBController(ball, paddle, view, bricks);
+        BBController controller = new BBController(ball, paddle, view, bricks, gameOverListener);
 
         controller.hitPaddle(10);
         assertEquals(325, ball.getAngle());
@@ -44,10 +45,11 @@ public class ControllerTest {
         Ball ball = new Ball(145, 10, 260, 680, 20, 20);
         Paddle paddle = mock(Paddle.class);
         BBComponent view = mock(BBComponent.class);
+        GameOverListener gameOverListener = mock(GameOverListener.class);
 
         Brick[] bricks = new Brick[20];
 
-        BBController controller = new BBController(ball, paddle, view, bricks);
+        BBController controller = new BBController(ball, paddle, view, bricks, gameOverListener);
 
         // when
         ball.setAngle(45);
@@ -76,8 +78,9 @@ public class ControllerTest {
         Paddle paddle = mock(Paddle.class);
         BBComponent view = mock(BBComponent.class);
         Brick[] bricks = new Brick[20];
+        GameOverListener gameOverListener = mock(GameOverListener.class);
 
-        BBController controller = new BBController(ball, paddle, view, bricks);
+        BBController controller = new BBController(ball, paddle, view, bricks, gameOverListener);
 
         double initialX = ball.getX();
         double initialY = ball.getY();

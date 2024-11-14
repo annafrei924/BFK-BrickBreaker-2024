@@ -2,27 +2,33 @@ package bfk.brickbreaker;
 
 import javax.swing.*;
 
-
 public class BBController{
     private final Ball ball;
     private final Paddle paddle;
     private final BBComponent view;
     private final Brick[] bricks;
     private Timer timer;
+    private int time = 0;
+    private boolean gameOver = false;
+    private GameOverListener gameOverListener;
 
-    public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
+    public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks, GameOverListener gameOverListener) {
         this.ball = ball;
         this.paddle = paddle;
         this.view = view;
         this.bricks = bricks;
+        this.gameOverListener = gameOverListener;
     }
 
-    public void startTimer() {
+    public int startTimer() {
         timer = new Timer(1000 / 60, e -> {
-           playGame();
+            if (!gameOver) {
+                playGame();
+                time++;
+            }
         });
-
         timer.start();
+        return time;
     }
 
     //ball moves & then checks for collisions
@@ -31,6 +37,7 @@ public class BBController{
         double newY = ball.updateY();
 
         ball.setFrame(newX, newY, ball.width, ball.height);
+        getAngle();
         checkCollisions();
 
         view.repaint();
@@ -44,7 +51,11 @@ public class BBController{
         } else if (ball.x + ball.width >= view.getWidth()) {
             bounce(Direction.RIGHT);
         } else if (ball.y + ball.height >= 800) {
-            System.exit(0);
+            timer.stop();
+            gameOver = true;
+            if (gameOverListener != null) {
+                gameOverListener.gameOver(time);
+            }
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
@@ -84,6 +95,12 @@ public class BBController{
             case RIGHT, LEFT -> ball.setAngle(180 - ball.getAngle());
             default -> { }
         }
+    }
+
+    public void getAngle() {
+        double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(), ball.getCenterX() - paddle.getCenterX());
+        double angleInDegrees = Math.toDegrees(angleInRadians);
+        System.out.println(angleInDegrees);
     }
 
 }
