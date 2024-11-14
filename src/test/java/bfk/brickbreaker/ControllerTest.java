@@ -22,19 +22,19 @@ public class ControllerTest {
         BBController controller = new BBController(ball, paddle, view, bricks, gameOverListener);
 
         controller.hitPaddle(10);
-        assertEquals(325, ball.getAngle());
+        assertEquals(45, ball.getAngle());
 
         controller.hitPaddle(40);
-        assertEquals(290, ball.getAngle());
+        assertEquals(75, ball.getAngle());
 
         controller.hitPaddle(50);
-        assertEquals(270, ball.getAngle());
+        assertEquals(90, ball.getAngle());
 
         controller.hitPaddle(70);
-        assertEquals(250, ball.getAngle());
+        assertEquals(105, ball.getAngle());
 
         controller.hitPaddle(90);
-        assertEquals(215, ball.getAngle());
+        assertEquals(135, ball.getAngle());
 
 
     }

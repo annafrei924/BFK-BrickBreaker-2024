@@ -77,29 +77,30 @@ public class BBController{
 
     public void hitPaddle(double paddleX) {
         if (paddleX < paddle.width / 4) {
-            ball.setAngle(325);
+            ball.setAngle(45);
         } else if (paddleX < paddle.width / 2) {
-            ball.setAngle(290);
+            ball.setAngle(75);
         } else if (paddleX == paddle.width / 2) {
-            ball.setAngle(270);
+            ball.setAngle(90);
         } else if (paddleX < paddle.width * 3.0 / 4.0) {
-            ball.setAngle(250);
+            ball.setAngle(105);
         } else {
-            ball.setAngle(215);
+            ball.setAngle(135);
         }
     }
 
     public void bounce(Direction direction) {
         switch (direction) {
-            case TOP, BRICK -> ball.setAngle(360 - ball.getAngle());
-            case RIGHT, LEFT -> ball.setAngle(180 - ball.getAngle());
+            case TOP, BRICK -> ball.setAngle((360 - ball.getAngle()) % 360);
+            case RIGHT, LEFT -> ball.setAngle((180 - ball.getAngle()) % 360);
             default -> { }
         }
     }
 
     public void getAngle() {
         double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(), ball.getCenterX() - paddle.getCenterX());
-        double angleInDegrees = Math.toDegrees(angleInRadians);
+        double angleInDegrees = Math.abs(Math.toDegrees(angleInRadians));
+        System.out.println("Ball: " + ball.getAngle());
         System.out.println(angleInDegrees);
     }
 

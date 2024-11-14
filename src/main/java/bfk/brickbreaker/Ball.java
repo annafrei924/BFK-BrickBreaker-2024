@@ -8,7 +8,7 @@ public class Ball extends Ellipse2D.Double {
 
     public Ball(double angle, double speed, double x, double y, int width, int height) {
         super(x, y, width, height);
-        this.angle = 360 - angle;
+        this.angle = angle;
         this.speed = speed;
 
     }
@@ -20,7 +20,7 @@ public class Ball extends Ellipse2D.Double {
     }
 
     public double updateY() {
-        y += speed * Math.sin(Math.toRadians(angle));
+        y -= speed * Math.sin(Math.toRadians(angle));
         return y;
     }
 
