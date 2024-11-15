@@ -2,45 +2,55 @@ package bfk.brickbreaker;
 
 import javax.swing.*;
 
-public class BBController{
-    private final Ball ball;
-    private final Paddle paddle;
-    private final BBComponent view;
-    private final Brick[] bricks;
-    private Timer timer;
-    private int time = 0;
-    private boolean gameOver = false;
-    private GameOverListener gameOverListener;
+import java.util.Random;
 
-    public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks, GameOverListener gameOverListener) {
+import static bfk.brickbreaker.BBFrame.*;
+
+public class BBController{
+    private Ball ball;
+    private Paddle paddle;
+    private BBComponent view;
+    private Brick[] bricks;
+    private Timer timer;
+    private int tickCounter = 0;
+    boolean gameOver = false;
+
+    public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
         this.ball = ball;
         this.paddle = paddle;
         this.view = view;
         this.bricks = bricks;
-        this.gameOverListener = gameOverListener;
     }
 
-    public int startTimer() {
+    public BBController(){
+        createBall();
+        createPaddle();
+        createBricks();
+        createView();
+        startTimer();
+   }
+
+    public void startTimer() {
         timer = new Timer(1000 / 60, e -> {
             if (!gameOver) {
-                playGame();
-                time++;
+                oneRound();
+                tickCounter++;
             }
         });
         timer.start();
-        return time;
     }
 
     //ball moves & then checks for collisions
-    public void playGame() {
+    public double oneRound() {
         double newX = ball.updateX();
         double newY = ball.updateY();
 
         ball.setFrame(newX, newY, ball.width, ball.height);
-        getAngle();
-        checkCollisions();
+        double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(), ball.getCenterX() - paddle.getCenterX());
 
+        checkCollisions();
         view.repaint();
+        return Math.abs(Math.toDegrees(angleInRadians));
     }
 
     public void checkCollisions() {
@@ -53,9 +63,7 @@ public class BBController{
         } else if (ball.y + ball.height >= 800) {
             timer.stop();
             gameOver = true;
-            if (gameOverListener != null) {
-                gameOverListener.gameOver(time);
-            }
+            System.out.println(getTicks());
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
@@ -97,12 +105,57 @@ public class BBController{
         }
     }
 
-    public void getAngle() {
-        double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(), ball.getCenterX() - paddle.getCenterX());
-        double angleInDegrees = Math.abs(Math.toDegrees(angleInRadians));
-        System.out.println("Ball: " + ball.getAngle());
-        System.out.println(angleInDegrees);
+
+    public void createBall() {
+        ball = new Ball(45, 5, 290, 670, 20, 20);
     }
 
+    public void createPaddle() {
+        paddle = new Paddle(250, 690, 100, 20);
+    }
+
+    public void createBricks() {
+        bricks = new Brick[NUM_BRICKS];
+        initializeBricks();
+    }
+
+    public void createView() {
+        view = new BBComponent(ball, paddle, bricks);
+    }
+
+    public void initializeBricks() {
+        Random rand = new Random();
+        for (int i = 0; i < bricks.length; i++) {
+            boolean overlap;
+            int x;
+            int y;
+            do {
+                x = rand.nextInt(width - BRICK_WIDTH);
+                y = rand.nextInt((int) ((height * 0.66) - BRICK_HEIGHT));
+
+                // Check if the new brick overlaps with any existing brick
+                overlap = false;
+                for (int j = 0; j < i; j++) {
+                    if (bricks[j].intersects(x, y, BRICK_WIDTH, BRICK_HEIGHT)) {
+                        overlap = true;
+                        break;
+                    }
+                }
+            } while (overlap);
+            bricks[i] = new Brick(x, y, BRICK_WIDTH, BRICK_HEIGHT);
+        }
+    }
+
+    public BBComponent getView() {
+        return view;
+    }
+
+    public Paddle getPaddle() {
+        return paddle;
+    }
+
+    public int getTicks() {
+        return tickCounter;
+    }
 }
 

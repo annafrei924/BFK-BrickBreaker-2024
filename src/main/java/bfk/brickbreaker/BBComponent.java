@@ -2,7 +2,8 @@ package bfk.brickbreaker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
+
+import static bfk.brickbreaker.BBFrame.NUM_BRICKS;
 
 public class BBComponent extends JComponent {
 
@@ -15,7 +16,6 @@ public class BBComponent extends JComponent {
         this.paddle = paddle;
         this.bricks = bricks;
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -41,4 +41,5 @@ public class BBComponent extends JComponent {
         g.setColor(Color.red);
         g2.fill(paddle);
     }
+
 }
