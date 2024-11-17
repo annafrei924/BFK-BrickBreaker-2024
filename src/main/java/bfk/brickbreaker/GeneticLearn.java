@@ -8,7 +8,7 @@ public class GeneticLearn {
 
     private static final int GENERATIONS = 10;
     private static final int NETWORK_COUNT = 1000;
-    private static final int INPUT_SIZE = 2;
+    private static final int INPUT_SIZE = 1;
     private static final int OUTPUT_SIZE = 2;
     private static final int TOP_AMOUNT = (int) (NETWORK_COUNT * .10);
     public static final int HIDDEN_NODES = 128;
@@ -29,13 +29,11 @@ public class GeneticLearn {
             // Every network plays the game
             for (NeuralNetwork network : networks) {
                 BBController bbController = new BBController();
-                BBFrame frame = new BBFrame(bbController);
-                frame.setVisible(true);
+                bbController.startTimer();
                 boolean running = bbController.isRunning();
                 while (running) {
                     double[] input = new double[INPUT_SIZE];
                     input[0] = bbController.currAngle;
-                    input[1] = bbController.getScore();
                     double[] answer = network.guess(input);
                     // Move paddle based on network's decision
                     if (answer[0] > answer[1]) {
@@ -49,8 +47,6 @@ public class GeneticLearn {
                 totalScore += bbController.getScore();
                 totalticks += bbController.getTicks();
                 networkStatsMap.put(network, new NetworkStats(bbController.getTicks(), bbController.getScore()));
-
-                frame.dispose();
             }
 
             // Sort the map based on score, and number of ticks
