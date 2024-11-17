@@ -13,6 +13,7 @@ public class BBController{
     private Brick[] bricks;
     private Timer timer;
     private int tickCounter = 0;
+    double currAngle = 0;
     boolean gameOver = false;
 
     public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
@@ -27,30 +28,29 @@ public class BBController{
         createPaddle();
         createBricks();
         createView();
-        startTimer();
    }
 
     public void startTimer() {
         timer = new Timer(1000 / 60, e -> {
             if (!gameOver) {
                 oneRound();
-                tickCounter++;
             }
         });
         timer.start();
     }
 
     //ball moves & then checks for collisions
-    public double oneRound() {
+    public void oneRound() {
+        tickCounter++;
         double newX = ball.updateX();
         double newY = ball.updateY();
 
         ball.setFrame(newX, newY, ball.width, ball.height);
         double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(), ball.getCenterX() - paddle.getCenterX());
+        currAngle = Math.abs(Math.toDegrees(angleInRadians));
 
         checkCollisions();
         view.repaint();
-        return Math.abs(Math.toDegrees(angleInRadians));
     }
 
     public void checkCollisions() {
@@ -61,9 +61,9 @@ public class BBController{
         } else if (ball.x + ball.width >= view.getWidth()) {
             bounce(Direction.RIGHT);
         } else if (ball.y + ball.height >= 800) {
-            timer.stop();
             gameOver = true;
-            System.out.println(getTicks());
+            timer.stop();
+            System.exit(0);
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();

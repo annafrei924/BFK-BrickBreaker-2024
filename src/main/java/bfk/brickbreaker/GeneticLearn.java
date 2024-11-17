@@ -5,8 +5,8 @@ import basicneuralnetwork.*;
 
 public class GeneticLearn {
     private static final Random random = new Random();
-    private static final int GENERATIONS = 25;
-    private static final int PADDLES = 1000;
+    private static final int GENERATIONS = 1;
+    private static final int PADDLES = 10;
     private static final int INPUT_SIZE = 1;
     private static final int OUTPUT_SIZE = 2;
     private static final int BREED = (int) (PADDLES * .01);
@@ -23,13 +23,17 @@ public class GeneticLearn {
 
         for (int i = 0; i < GENERATIONS; i++) {
             for (NeuralNetwork network : networks) {
-                BBController bbController = new BBController();
+                BBFrame frame = new BBFrame();
+                BBController bbController = frame.bbController;
+                new BBFrame().setVisible(true);
+
                 boolean running;
                 do {
                     double[] input = new double[INPUT_SIZE];
-                    input[0] = bbController.oneRound();
+                    input[0] = bbController.currAngle;
                     double[] answer = network.guess(input);
-                    running = bbController.gameOver;
+                    running = !bbController.gameOver;
+
                     if (answer[0] > input[0]) {
                         bbController.getPaddle().moveLeft();
                     }
@@ -40,6 +44,7 @@ public class GeneticLearn {
 
                 int tickCounter = bbController.getTicks();
                 networkTickMap.put(network, tickCounter);
+                System.out.println("Network " + network + " : " + tickCounter);
             }
 
             // Sort the map based on tickCounter values (in descending order)
@@ -51,7 +56,6 @@ public class GeneticLearn {
             for (Map.Entry<NeuralNetwork, Integer> entry : sortedEntries) {
                 System.out.println("Network: " + entry.getKey() + " | Ticks: " + entry.getValue());
             }
-
         }
     }
 }
