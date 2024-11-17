@@ -4,22 +4,6 @@ import java.util.*;
 import basicneuralnetwork.*;
 import static bfk.brickbreaker.BBFrame.NUM_BRICKS;
 
-class NetworkStats {
-    int tickCounter;
-    int score;
-
-    public NetworkStats(int tickCounter, int score) {
-        this.tickCounter = tickCounter;
-        this.score = score;
-    }
-
-    @Override
-    public String toString() {
-        return "Ticks: " + tickCounter + ", Score: " + score;
-    }
-
-}
-
 public class GeneticLearn {
 
     private static final int GENERATIONS = 10;
