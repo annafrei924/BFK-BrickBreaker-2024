@@ -12,25 +12,14 @@ public class BBFrame extends JFrame {
     static final int BRICK_WIDTH = 60;
     static final int BRICK_HEIGHT = 20;
     private int time = 0;
-    BBController bbController = new BBController();
 
-    public BBFrame() {
+
+    public BBFrame(BBController bbController) {
         setTitle("Brick Breaker");
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
-
-//        JButton startButton = new JButton("Start");
-//        startButton.addActionListener(e -> {
         bbController.startTimer();
-        requestFocusInWindow();
-//        });
-
-//        JPanel bottomPanel = new JPanel();
-//        bottomPanel.add(startButton);
-//        add(bottomPanel, BorderLayout.SOUTH);
-
 
         add(bbController.getView(), BorderLayout.CENTER);
         this.addKeyListener(new KeyAdapter() {
@@ -46,5 +35,6 @@ public class BBFrame extends JFrame {
             }
         });
         setFocusable(true);
+        requestFocusInWindow();
     }
 }

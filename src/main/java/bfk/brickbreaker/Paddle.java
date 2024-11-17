@@ -2,6 +2,8 @@ package bfk.brickbreaker;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import static bfk.brickbreaker.BBFrame.*;
+
 
 public class Paddle extends Rectangle {
     private final int speed = 15;
@@ -17,7 +19,7 @@ public class Paddle extends Rectangle {
     }
 
     public void moveRight() {
-        if (x < 600 - width) {
+        if (x < BBFrame.width - width) {
             x += speed;
         }
     }

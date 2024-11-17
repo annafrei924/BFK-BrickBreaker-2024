@@ -15,7 +15,7 @@ public class BBController{
     private int tickCounter = 0;
     double currAngle = 0;
     boolean gameOver = false;
-
+    private int score = 0;
     public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
         this.ball = ball;
         this.paddle = paddle;
@@ -44,8 +44,9 @@ public class BBController{
         tickCounter++;
         double newX = ball.updateX();
         double newY = ball.updateY();
-
         ball.setFrame(newX, newY, ball.width, ball.height);
+        paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
+
         double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(), ball.getCenterX() - paddle.getCenterX());
         currAngle = Math.abs(Math.toDegrees(angleInRadians));
 
@@ -60,10 +61,10 @@ public class BBController{
             bounce(Direction.LEFT);
         } else if (ball.x + ball.width >= view.getWidth()) {
             bounce(Direction.RIGHT);
-        } else if (ball.y + ball.height >= 800) {
+        } else if (ball.y + ball.height >= view.getHeight()) {
             gameOver = true;
             timer.stop();
-            System.exit(0);
+            isRunning();
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
@@ -76,6 +77,7 @@ public class BBController{
                     if (ball.getBounds2D().intersects(brick.getBounds2D())) {
                         bounce(Direction.BRICK);
                         bricks[i] = null;
+                        score++;
                         return;
                     }
                 }
@@ -156,6 +158,10 @@ public class BBController{
 
     public int getTicks() {
         return tickCounter;
+    }
+
+    public boolean isRunning() {
+        return !gameOver;
     }
 }
 
