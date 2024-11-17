@@ -65,6 +65,10 @@ public class BBController{
             gameOver = true;
             timer.stop();
             isRunning();
+        } else if(score == NUM_BRICKS) {
+                gameOver = true;
+                timer.stop();
+                isRunning();
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
@@ -109,7 +113,7 @@ public class BBController{
 
 
     public void createBall() {
-        ball = new Ball(45, 5, 290, 670, 20, 20);
+        ball = new Ball(45, 30, 290, 670, 20, 20);
     }
 
     public void createPaddle() {
@@ -163,5 +167,10 @@ public class BBController{
     public boolean isRunning() {
         return !gameOver;
     }
+
+    public int getScore() {
+        return score;
+    }
+
 }
 
