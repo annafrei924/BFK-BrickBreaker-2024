@@ -23,11 +23,11 @@ public class BBController{
         this.bricks = bricks;
     }
 
-    public BBController(){
-        createBall();
-        createPaddle();
-        createBricks();
-        createView();
+    public BBController() {
+       createBall();
+       createPaddle();
+       createBricks();
+       createView();
    }
 
     public void startTimer() {
@@ -113,7 +113,7 @@ public class BBController{
 
 
     public void createBall() {
-        ball = new Ball(45, 30, 290, 670, 20, 20);
+        ball = new Ball(45, 100, 290, 670, 20, 20);
     }
 
     public void createPaddle() {
@@ -171,6 +171,7 @@ public class BBController{
     public int getScore() {
         return score;
     }
+
 
 }
 

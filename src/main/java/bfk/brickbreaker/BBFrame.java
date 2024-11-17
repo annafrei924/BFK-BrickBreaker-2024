@@ -11,8 +11,6 @@ public class BBFrame extends JFrame {
     static final int height = 800;
     static final int BRICK_WIDTH = 60;
     static final int BRICK_HEIGHT = 20;
-    private int time = 0;
-
 
     public BBFrame(BBController bbController) {
         setTitle("Brick Breaker");

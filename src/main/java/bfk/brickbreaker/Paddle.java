@@ -6,7 +6,7 @@ import static bfk.brickbreaker.BBFrame.*;
 
 
 public class Paddle extends Rectangle {
-    private final int speed = 30;
+    private final int speed = 90;
 
     public Paddle(int x, int y, int width, int height) {
         super(x, y, width, height);
