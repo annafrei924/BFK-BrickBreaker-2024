@@ -65,7 +65,7 @@ public class BBController{
             gameOver = true;
             timer.stop();
             isRunning();
-        } else if(score == NUM_BRICKS) {
+        } else if (score == NUM_BRICKS) {
                 gameOver = true;
                 timer.stop();
                 isRunning();
