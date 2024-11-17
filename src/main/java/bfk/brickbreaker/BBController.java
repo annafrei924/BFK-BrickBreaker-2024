@@ -47,7 +47,8 @@ public class BBController{
         ball.setFrame(newX, newY, ball.width, ball.height);
         paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
 
-        double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(), ball.getCenterX() - paddle.getCenterX());
+        double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(),
+                ball.getCenterX() - paddle.getCenterX());
         currAngle = Math.abs(Math.toDegrees(angleInRadians));
 
         checkCollisions();
