@@ -1,12 +1,11 @@
 package bfk.brickbreaker;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import static bfk.brickbreaker.BBFrame.*;
+
 
 
 public class Paddle extends Rectangle {
-    private final int speed = 90;
+    private final int speed = 10;
 
     public Paddle(int x, int y, int width, int height) {
         super(x, y, width, height);

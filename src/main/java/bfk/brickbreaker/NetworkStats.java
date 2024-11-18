@@ -1,8 +1,8 @@
 package bfk.brickbreaker;
 
-public class NetworkStats {
-    int tickCounter;
-    int score;
+class NetworkStats {
+    public int tickCounter;
+    public int score;
 
     public NetworkStats(int tickCounter, int score) {
         this.tickCounter = tickCounter;

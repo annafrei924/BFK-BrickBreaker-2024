@@ -1,7 +1,7 @@
 package bfk.brickbreaker;
 
 import java.awt.geom.Ellipse2D;
-
+import static bfk.brickbreaker.BBFrame.*;
 public class Ball extends Ellipse2D.Double {
     private double angle;
     private double speed;
@@ -24,6 +24,28 @@ public class Ball extends Ellipse2D.Double {
         return y;
     }
 
+    // Clamp the ball's position to the screen bounds (0 <= x <= screenWidth, 0 <= y <= screenHeight)
+    private void clampPosition() {
+        x = Math.max(0, Math.min(x, BBFrame.width - width));
+        y = Math.max(0, Math.min(y, BBFrame.height - height));
+    }
+
+    // Check if the ball is off the screen, if it is, reset to the center
+    public void resetPositionIfOffScreen() {
+        if (x < 0 || x > BBFrame.width || y < 0 || y > BBFrame.height) {
+            x = BBFrame.width / 2 - width / 2;
+            y = BBFrame.height / 2 - height / 2;
+        }
+    }
+
+    // Update the ball's position, checking for boundaries and resetting if needed
+    public void updatePosition() {
+        updateX();
+        updateY();
+        clampPosition();
+        resetPositionIfOffScreen();
+    }
+
     public double getAngle() {
         return angle;
     }
@@ -33,3 +55,4 @@ public class Ball extends Ellipse2D.Double {
     }
 
 }
+

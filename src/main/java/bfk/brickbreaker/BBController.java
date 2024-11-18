@@ -42,9 +42,8 @@ public class BBController{
     //ball moves & then checks for collisions
     public void oneRound() {
         tickCounter++;
-        double newX = ball.updateX();
-        double newY = ball.updateY();
-        ball.setFrame(newX, newY, ball.width, ball.height);
+        ball.updatePosition();
+        ball.setFrame(ball.x, ball.y, ball.width, ball.height);
         paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
 
         double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(),
@@ -114,7 +113,7 @@ public class BBController{
 
 
     public void createBall() {
-        ball = new Ball(45, 100, 290, 670, 20, 20);
+        ball = new Ball(45, 30, 290, 670, 20, 20);
     }
 
     public void createPaddle() {
