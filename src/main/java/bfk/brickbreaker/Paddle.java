@@ -18,7 +18,7 @@ public class Paddle extends Rectangle {
     }
 
     public void moveRight() {
-        if (x < BBFrame.width - width) {
+        if (x < BBComponent.WIDTH - width) {
             x += speed;
         }
     }

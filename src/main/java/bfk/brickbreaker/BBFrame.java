@@ -4,17 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import static bfk.brickbreaker.BBController.*;
 
 public class BBFrame extends JFrame {
     static final int NUM_BRICKS = 20;
-    static final int width = 600;
-    static final int height = 800;
     static final int BRICK_WIDTH = 60;
     static final int BRICK_HEIGHT = 20;
 
     public BBFrame(BBController bbController) {
         setTitle("Brick Breaker");
-        setSize(width, height);
+        setSize(BBComponent.WIDTH, BBComponent.HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         bbController.startTimer();

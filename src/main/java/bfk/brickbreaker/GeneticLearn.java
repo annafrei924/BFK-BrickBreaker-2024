@@ -1,5 +1,6 @@
 package bfk.brickbreaker;
 
+import java.net.ConnectException;
 import java.util.*;
 import basicneuralnetwork.*;
 
@@ -28,7 +29,7 @@ public class GeneticLearn {
     private static final int INPUT_SIZE = 1;
     private static final int OUTPUT_SIZE = 2;
     private static final int TOP_AMOUNT = (int) (NETWORK_COUNT * .01);
-    public static final int HIDDEN_NODES = 128;
+    public static final int HIDDEN_NODES = 4;
 
     public static void main(String[] args) {
 
@@ -42,14 +43,18 @@ public class GeneticLearn {
         for (int i = 0; i < GENERATIONS; i++) {
             int tickCounter = 0;
             int sumSuccess = 0;
+            int networkNum = 0;
             Map<NeuralNetwork, NetworkStats> networkStatsMap = new HashMap<>();
             // Every network plays the game
             for (NeuralNetwork network : networks) {
+                System.out.println("Network: " + networkNum++);
                 int success = 0;
                 BBController bbController = new BBController();
-                BBFrame frame = new BBFrame(bbController);
-                frame.setVisible(true);
-                //bbController.startTimer();
+                bbController.reset();
+                //BBFrame frame = new BBFrame(bbController);
+                //frame.setVisible(true);
+                bbController.startTimer();
+
                 boolean running = bbController.isRunning();
                 while (running) {
                     double[] input = new double[INPUT_SIZE];
@@ -66,12 +71,12 @@ public class GeneticLearn {
                         bbController.getPaddle().moveRight();
                     }
                     running = bbController.isRunning();
-                    bbController.getView().repaint();
+                    //bbController.getView().repaint();
                 }
                 tickCounter += bbController.getTicks();
                 //networkStatsMap.put(network, new NetworkStats(bbController.getTicks(), bbController.getScore()));
                 networkStatsMap.put(network, new NetworkStats(success, bbController.getTicks(), bbController.getScore()));
-                frame.dispose();
+                //frame.dispose();
             }
             System.out.println("Sum success: " + sumSuccess + " | tickCounter: " + tickCounter);
 
@@ -125,8 +130,5 @@ public class GeneticLearn {
                 }
             }
         }
-        BBController bbController = new BBController();
-        BBFrame frame = new BBFrame(bbController);
-        frame.setVisible(true);
     }
 }

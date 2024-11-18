@@ -26,15 +26,15 @@ public class Ball extends Ellipse2D.Double {
 
     // Clamp the ball's position to the screen bounds (0 <= x <= screenWidth, 0 <= y <= screenHeight)
     private void clampPosition() {
-        x = Math.max(0, Math.min(x, BBFrame.width - width));
-        y = Math.max(0, Math.min(y, BBFrame.height - height));
+        x = Math.max(0, Math.min(x, BBComponent.WIDTH - width));
+        y = Math.max(0, Math.min(y, BBComponent.HEIGHT - height));
     }
 
     // Check if the ball is off the screen, if it is, reset to the center
     public void resetPositionIfOffScreen() {
-        if (x < 0 || x > BBFrame.width || y < 0 || y > BBFrame.height) {
-            x = BBFrame.width / 2 - width / 2;
-            y = BBFrame.height / 2 - height / 2;
+        if (x < 0 || x > BBComponent.WIDTH || y < 0 || y > BBComponent.HEIGHT) {
+            x = BBComponent.WIDTH / 2 - width / 2;
+            y = BBComponent.HEIGHT / 2 - height / 2;
         }
     }
 

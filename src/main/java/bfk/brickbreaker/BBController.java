@@ -4,7 +4,9 @@ import javax.swing.*;
 
 import java.util.Random;
 
+import static bfk.brickbreaker.BBComponent.*;
 import static bfk.brickbreaker.BBFrame.*;
+
 
 public class BBController{
     private Ball ball;
@@ -51,7 +53,7 @@ public class BBController{
         currAngle = Math.abs(Math.toDegrees(angleInRadians));
 
         checkCollisions();
-        view.repaint();
+        //view.repaint();
     }
 
     public void checkCollisions() {
@@ -59,16 +61,16 @@ public class BBController{
             bounce(Direction.TOP);
         } else if (ball.x <= 0) {
             bounce(Direction.LEFT);
-        } else if (ball.x + ball.width >= view.getWidth()) {
+        } else if (ball.x + ball.width >= BBComponent.WIDTH) {
             bounce(Direction.RIGHT);
-        } else if (ball.y + ball.height >= view.getHeight()) {
+        } else if (ball.y + ball.height >= BBComponent.HEIGHT) {
             gameOver = true;
             timer.stop();
             isRunning();
         } else if (score == NUM_BRICKS) {
-                gameOver = true;
-                timer.stop();
-                isRunning();
+            gameOver = true;
+            timer.stop();
+            isRunning();
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
@@ -136,8 +138,8 @@ public class BBController{
             int x;
             int y;
             do {
-                x = rand.nextInt(width - BRICK_WIDTH);
-                y = rand.nextInt((int) ((height * 0.66) - BRICK_HEIGHT));
+                x = rand.nextInt(view.WIDTH - BRICK_WIDTH);
+                y = rand.nextInt((int) ((view.HEIGHT * 0.66) - BRICK_HEIGHT));
 
                 // Check if the new brick overlaps with any existing brick
                 overlap = false;
@@ -170,6 +172,16 @@ public class BBController{
 
     public int getScore() {
         return score;
+    }
+
+    public void reset() {
+        createBall();
+        createPaddle();
+        createBricks();
+        createView();
+        gameOver = false;
+        tickCounter = 0;
+        score = 0;
     }
 
 
