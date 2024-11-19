@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import java.util.Random;
 
-import static bfk.brickbreaker.BBComponent.*;
 import static bfk.brickbreaker.BBFrame.*;
 
 
@@ -15,9 +14,12 @@ public class BBController{
     private Brick[] bricks;
     private Timer timer;
     private int tickCounter = 0;
-    double currAngle = 0;
-    boolean gameOver = false;
+    private double currAngle = 0;
     private int score = 0;
+
+    boolean gameOver = false;
+
+
     public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
         this.ball = ball;
         this.paddle = paddle;
@@ -47,14 +49,13 @@ public class BBController{
         ball.updatePosition();
         ball.setFrame(ball.x, ball.y, ball.width, ball.height);
         paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
-
         double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(),
                 ball.getCenterX() - paddle.getCenterX());
-        currAngle = Math.abs(Math.toDegrees(angleInRadians));
-
+        currAngle =  Math.abs(Math.toDegrees(angleInRadians));
         checkCollisions();
         //view.repaint();
     }
+
 
     public void checkCollisions() {
         if (ball.y <= 0) {
@@ -65,12 +66,8 @@ public class BBController{
             bounce(Direction.RIGHT);
         } else if (ball.y + ball.height >= BBComponent.HEIGHT) {
             gameOver = true;
-            timer.stop();
-            isRunning();
         } else if (score == NUM_BRICKS) {
             gameOver = true;
-            timer.stop();
-            isRunning();
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
@@ -166,22 +163,12 @@ public class BBController{
         return tickCounter;
     }
 
-    public boolean isRunning() {
-        return !gameOver;
-    }
-
     public int getScore() {
         return score;
     }
 
-    public void reset() {
-        createBall();
-        createPaddle();
-        createBricks();
-        createView();
-        gameOver = false;
-        tickCounter = 0;
-        score = 0;
+    public double getCurrAngle() {
+            return currAngle;
     }
 
 

@@ -1,30 +1,47 @@
 package bfk.brickbreaker;
 
-import java.net.ConnectException;
 import java.util.*;
 import basicneuralnetwork.*;
 
 public class GeneticLearn {
-    static class NetworkStats {
+
+    static class NetworkStats implements Comparable<NetworkStats> {
+        public NeuralNetwork network;
         public int angleCounter;
         public int tickCounter;
         public int score;
 
-        public NetworkStats(int angleCounter, int tickCounter, int score) {
+        public NetworkStats(NeuralNetwork network, int angleCounter, int tickCounter, int score) {
+            this.network = network;
             this.angleCounter = angleCounter;
             this.tickCounter = tickCounter;
             this.score = score;
         }
 
         @Override
-        public String toString() {
-            return "Ticks: " + tickCounter + ", Score: " + score;
+        public int compareTo(NetworkStats o) {
+            // First compare by angleCounter
+            int angleComparison = Integer.compare(o.angleCounter, this.angleCounter);
+            if (angleComparison != 0) {
+                return angleComparison;
+            }
+            // If angleCounters are the same, compare by tickCounter
+            return Integer.compare(o.tickCounter, this.tickCounter);
         }
 
+        @Override
+        public String toString() {
+            return "NetworkStats{" +
+                    "network=" + network +
+                    ", angleCounter=" + angleCounter +
+                    ", tickCounter=" + tickCounter +
+                    ", score=" + score +
+                    '}';
+        }
     }
 
 
-    private static final int GENERATIONS = 10;
+    private static final int GENERATIONS = 50;
     private static final int NETWORK_COUNT = 1000;
     private static final int INPUT_SIZE = 1;
     private static final int OUTPUT_SIZE = 2;
@@ -38,29 +55,25 @@ public class GeneticLearn {
         for (int i = 0; i < NETWORK_COUNT; i++) {
             networks.add(new NeuralNetwork(INPUT_SIZE, HIDDEN_NODES, OUTPUT_SIZE));
         }
+        List<NetworkStats> networkAndStats = new ArrayList<>();
 
         // For every generation
         for (int i = 0; i < GENERATIONS; i++) {
+            System.out.println("Starting Generation " + i);
             int tickCounter = 0;
             int sumSuccess = 0;
-            int networkNum = 0;
-            Map<NeuralNetwork, NetworkStats> networkStatsMap = new HashMap<>();
             // Every network plays the game
             for (NeuralNetwork network : networks) {
-                System.out.println("Network: " + networkNum++);
-                int success = 0;
+                int angleSuccess = 0;
                 BBController bbController = new BBController();
-                bbController.reset();
-                //BBFrame frame = new BBFrame(bbController);
-                //frame.setVisible(true);
-                bbController.startTimer();
-
-                boolean running = bbController.isRunning();
+                boolean running = !bbController.gameOver;
                 while (running) {
+                    bbController.oneRound();
                     double[] input = new double[INPUT_SIZE];
-                    input[0] = bbController.currAngle;
-                    if (input[0] == 90) {
-                        success++;
+                    input[0] = bbController.getCurrAngle();
+                    double tolerance = .5;
+                    if (Math.abs(input[0] - 90) < tolerance) {
+                        angleSuccess++;
                         sumSuccess++;
                     }
                     double[] answer = network.guess(input);
@@ -70,58 +83,27 @@ public class GeneticLearn {
                     } else {
                         bbController.getPaddle().moveRight();
                     }
-                    running = bbController.isRunning();
-                    //bbController.getView().repaint();
+                    running = !bbController.gameOver;
                 }
                 tickCounter += bbController.getTicks();
-                //networkStatsMap.put(network, new NetworkStats(bbController.getTicks(), bbController.getScore()));
-                networkStatsMap.put(network, new NetworkStats(success, bbController.getTicks(), bbController.getScore()));
-                //frame.dispose();
+                NetworkStats stats= new NetworkStats(network, angleSuccess, bbController.getTicks(), bbController.getScore());
+                networkAndStats.add(stats);
             }
             System.out.println("Sum success: " + sumSuccess + " | tickCounter: " + tickCounter);
-
-            // Sort by angleCounter
-            List<Map.Entry<NeuralNetwork, NetworkStats>> sortedEntries = new ArrayList<>(networkStatsMap.entrySet());
-            sortedEntries.sort((entry1, entry2) -> {
-                NetworkStats stats1 = entry1.getValue();
-                NetworkStats stats2 = entry2.getValue();
-
-                return Integer.compare(stats2.angleCounter, stats1.angleCounter);
-            });
-
-            // Sort the map based on score, and number of ticks
-
-//            sortedEntries.sort((entry1, entry2) -> {
-//                NetworkStats stats1 = entry1.getValue();
-//                NetworkStats stats2 = entry2.getValue();
-//
-//                int scoreComparison = Integer.compare(stats2.score, stats1.score); // compare by score
-//                if (scoreComparison != 0) {
-//                    return scoreComparison;
-//                }
-//
-//                // If scores are equal
-//                if (stats1.score == NUM_BRICKS && stats2.score == NUM_BRICKS) {
-//                    return Integer.compare(stats1.tickCounter, stats2.tickCounter);
-//                } else if (stats1.score != NUM_BRICKS && stats2.score != NUM_BRICKS) {
-//                    return Integer.compare(stats2.tickCounter, stats1.tickCounter);
-//                }
-//
-//                return Integer.compare(stats2.score, stats1.score);
-//            });
+            Collections.sort(networkAndStats);
 
             // Select the top networks
             List<NeuralNetwork> topNetworks = new ArrayList<>();
             for (int j = 0; j < TOP_AMOUNT; j++) {
-                topNetworks.add(sortedEntries.get(j).getKey());
+                topNetworks.add(networkAndStats.get(j).network);
             }
             networks.clear();
 
             // Create new networks by merging top networks and mutating them
-            for (int j = 0; j < topNetworks.size(); j++) {
-                NeuralNetwork network1 = topNetworks.get(j);
-                for (int k = 0; k < topNetworks.size(); k++) {
-                    NeuralNetwork network2 = topNetworks.get(k);
+            for (int j = 0; j < TOP_AMOUNT; j++) {
+                NeuralNetwork network1 = networkAndStats.get(j).network;
+                for (int k = 0; k < TOP_AMOUNT; k++) {
+                    NeuralNetwork network2 = networkAndStats.get(k).network;
                     NeuralNetwork merged = network1.merge(network2);
                     for (int l = 0; l < NETWORK_COUNT / (TOP_AMOUNT * TOP_AMOUNT); l++) {
                         merged.mutate(0.1);
@@ -129,6 +111,7 @@ public class GeneticLearn {
                     }
                 }
             }
+            networkAndStats.clear();
         }
     }
 }
