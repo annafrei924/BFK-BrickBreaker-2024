@@ -159,6 +159,8 @@ public class BBController{
         return paddle;
     }
 
+    public Ball getBall() {return ball;}
+
     public int getTicks() {
         return tickCounter;
     }
@@ -170,6 +172,7 @@ public class BBController{
     public double getCurrAngle() {
             return currAngle;
     }
+
 
 
 }

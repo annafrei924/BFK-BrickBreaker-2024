@@ -34,8 +34,6 @@ public class ControllerTest {
 
         controller.hitPaddle(90);
         assertEquals(135, ball.getAngle());
-
-
     }
 
     @Test
@@ -72,12 +70,9 @@ public class ControllerTest {
     @Test
     public void ballMoves() {
         // given
-        Ball ball = new Ball(145, 10, 260, 680, 20, 20);
-        Paddle paddle = mock(Paddle.class);
-        BBComponent view = mock(BBComponent.class);
-        Brick[] bricks = new Brick[20];
 
-        BBController controller = new BBController(ball, paddle, view, bricks);
+        BBController controller = new BBController();
+        Ball ball = controller.getBall();
 
         double initialX = ball.getX();
         double initialY = ball.getY();
