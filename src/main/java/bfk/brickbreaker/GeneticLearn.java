@@ -31,7 +31,7 @@ public class GeneticLearn {
     }
 
 
-    private static final int GENERATIONS = 50;
+    private static final int GENERATIONS = 500;
     private static final int NETWORK_COUNT = 1000;
     private static final int INPUT_SIZE = 1;
     private static final int OUTPUT_SIZE = 2;

@@ -17,7 +17,7 @@ public class BBController{
     private double currAngle = 0;
     private int score = 0;
     boolean gameOver = false;
-    final int NUM_BRICKS = 1;
+    final int numBricks = 1;
 
 
     public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
@@ -65,7 +65,7 @@ public class BBController{
             bounce(Direction.RIGHT);
         } else if (ball.y + ball.height >= BBComponent.HEIGHT) {
             gameOver = true;
-        } else if (score == NUM_BRICKS) {
+        //} else if (score == numBricks) {
             //gameOver = true;
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
@@ -119,7 +119,7 @@ public class BBController{
     }
 
     public void createBricks() {
-        bricks = new Brick[NUM_BRICKS];
+        bricks = new Brick[numBricks];
         initializeBricks();
     }
 
