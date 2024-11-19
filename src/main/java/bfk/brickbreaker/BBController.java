@@ -159,7 +159,9 @@ public class BBController{
         return paddle;
     }
 
-    public Ball getBall() { return ball; }
+    public Ball getBall() {
+        return ball;
+    }
 
     public int getTicks() {
         return tickCounter;
