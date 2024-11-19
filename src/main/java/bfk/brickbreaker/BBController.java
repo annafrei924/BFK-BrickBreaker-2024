@@ -52,7 +52,7 @@ public class BBController{
 
         currAngle = getCurrAngle();
         checkCollisions();
-        //view.repaint();
+        view.repaint();
     }
 
 
@@ -111,7 +111,7 @@ public class BBController{
 
 
     public void createBall() {
-        ball = new Ball(45, 30, 290, 670, 20, 20);
+        ball = new Ball(45, 10, 290, 670, 20, 20);
     }
 
     public void createPaddle() {
@@ -134,8 +134,8 @@ public class BBController{
             int x;
             int y;
             do {
-                x = rand.nextInt(view.WIDTH - BRICK_WIDTH);
-                y = rand.nextInt((int) ((view.HEIGHT * 0.66) - BRICK_HEIGHT));
+                x = rand.nextInt(BBComponent.WIDTH - BRICK_WIDTH);
+                y = rand.nextInt((int) ((BBComponent.HEIGHT * 0.66) - BRICK_HEIGHT));
 
                 // Check if the new brick overlaps with any existing brick
                 overlap = false;
