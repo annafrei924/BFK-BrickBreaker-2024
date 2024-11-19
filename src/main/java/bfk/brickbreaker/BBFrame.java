@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import static bfk.brickbreaker.BBController.*;
 
 public class BBFrame extends JFrame {
-    static final int NUM_BRICKS = 20;
     static final int BRICK_WIDTH = 60;
     static final int BRICK_HEIGHT = 20;
 

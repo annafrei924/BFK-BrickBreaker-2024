@@ -7,31 +7,25 @@ public class GeneticLearn {
 
     static class NetworkStats implements Comparable<NetworkStats> {
         public NeuralNetwork network;
-        public int angleCounter;
         public int tickCounter;
         public int score;
 
-        public NetworkStats(NeuralNetwork network, int angleCounter, int tickCounter, int score) {
+        public NetworkStats(NeuralNetwork network, int tickCounter, int score) {
             this.network = network;
-            this.angleCounter = angleCounter;
             this.tickCounter = tickCounter;
             this.score = score;
         }
 
         @Override
         public int compareTo(NetworkStats o) {
-            // First compare by angleCounter
-            int angleComparison = Integer.compare(o.angleCounter, this.angleCounter);
-            if (angleComparison != 0) {
-                return angleComparison;
-            }
-            // If angleCounters are the same, compare by tickCounter
-            return Integer.compare(o.tickCounter, this.tickCounter);
+            int tickComparison = Integer.compare(o.tickCounter, this.tickCounter);
+            return tickComparison;
+
         }
 
         @Override
         public String toString() {
-            return "NetworkStats{" + "network=" + network + ", angleCounter=" + angleCounter
+            return "NetworkStats{" + "network=" + network
                     + ", tickCounter=" + tickCounter + ", score=" + score + '}';
         }
     }
@@ -42,6 +36,7 @@ public class GeneticLearn {
     private static final int INPUT_SIZE = 1;
     private static final int OUTPUT_SIZE = 2;
     private static final int TOP_AMOUNT = (int) (NETWORK_COUNT * .01);
+    private static final int HIDDEN_LAYERS = 2;
     public static final int HIDDEN_NODES = 4;
 
     public static void main(String[] args) {
@@ -49,29 +44,23 @@ public class GeneticLearn {
         // Create Array of Networks
         List<NeuralNetwork> networks = new ArrayList<>();
         for (int i = 0; i < NETWORK_COUNT; i++) {
-            networks.add(new NeuralNetwork(INPUT_SIZE, HIDDEN_NODES, OUTPUT_SIZE));
+            networks.add(new NeuralNetwork(INPUT_SIZE, HIDDEN_LAYERS, HIDDEN_NODES, OUTPUT_SIZE));
         }
         List<NetworkStats> networkAndStats = new ArrayList<>();
 
         // For every generation
         for (int i = 0; i < GENERATIONS; i++) {
             System.out.println("Starting Generation " + i);
-            int tickCounter = 0;
-            int sumSuccess = 0;
+            int totalTickCounter = 0;
             // Every network plays the game
             for (NeuralNetwork network : networks) {
-                int angleSuccess = 0;
+                int rounds = 0;
                 BBController bbController = new BBController();
                 boolean running = !bbController.gameOver;
-                while (running) {
+                while (running && rounds < 1000) {
                     bbController.oneRound();
                     double[] input = new double[INPUT_SIZE];
                     input[0] = bbController.getCurrAngle();
-                    double tolerance = .5;
-                    if (Math.abs(input[0] - 90) < tolerance) {
-                        angleSuccess++;
-                        sumSuccess++;
-                    }
                     double[] answer = network.guess(input);
                     // Move paddle based on network's decision
                     if (answer[0] > answer[1]) {
@@ -80,13 +69,13 @@ public class GeneticLearn {
                         bbController.getPaddle().moveRight();
                     }
                     running = !bbController.gameOver;
+                    rounds++;
                 }
-                tickCounter += bbController.getTicks();
-                NetworkStats stats = new NetworkStats(network, angleSuccess,
-                        bbController.getTicks(), bbController.getScore());
+                totalTickCounter += bbController.getTicks();
+                NetworkStats stats = new NetworkStats(network, bbController.getTicks(), bbController.getScore());
                 networkAndStats.add(stats);
             }
-            System.out.println("Sum success: " + sumSuccess + " | tickCounter: " + tickCounter);
+            System.out.println("Tickcounter: " + totalTickCounter);
             Collections.sort(networkAndStats);
 
             // Select the top networks

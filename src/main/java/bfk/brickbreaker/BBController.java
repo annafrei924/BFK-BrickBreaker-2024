@@ -16,8 +16,8 @@ public class BBController{
     private int tickCounter = 0;
     private double currAngle = 0;
     private int score = 0;
-
     boolean gameOver = false;
+    final int NUM_BRICKS = 1;
 
 
     public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
@@ -49,9 +49,8 @@ public class BBController{
         ball.updatePosition();
         ball.setFrame(ball.x, ball.y, ball.width, ball.height);
         paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
-        double angleInRadians = Math.atan2(ball.getCenterY() - paddle.getCenterY(),
-                ball.getCenterX() - paddle.getCenterX());
-        currAngle =  Math.abs(Math.toDegrees(angleInRadians));
+
+        currAngle = getCurrAngle();
         checkCollisions();
         //view.repaint();
     }
@@ -67,7 +66,7 @@ public class BBController{
         } else if (ball.y + ball.height >= BBComponent.HEIGHT) {
             gameOver = true;
         } else if (score == NUM_BRICKS) {
-            gameOver = true;
+            //gameOver = true;
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
             bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
@@ -172,7 +171,9 @@ public class BBController{
     }
 
     public double getCurrAngle() {
-            return currAngle;
+        double angleInRadians = Math.atan2(paddle.getY() - (ball.y + ball.height),
+                paddle.getCenterX() - ball.getCenterX());
+        return Math.toDegrees(angleInRadians);
     }
 
 

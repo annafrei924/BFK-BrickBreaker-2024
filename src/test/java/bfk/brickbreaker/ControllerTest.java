@@ -84,5 +84,21 @@ public class ControllerTest {
         assertNotEquals(initialX, ball.x);
         assertNotEquals(initialY, ball.y);
     }
+
+    @Test
+    public void checkAngle() {
+        BBController controller = new BBController();
+        Ball ball = controller.getBall();
+        Paddle paddle = controller.getPaddle();
+
+        ball.x = 200;
+        ball.y = 100;
+        paddle.x = 160;
+        paddle.y = 690;
+
+
+        assertEquals(ball.getCenterX(), paddle.getCenterX());
+        assertEquals(controller.getCurrAngle(), 90);
+    }
 }
 
