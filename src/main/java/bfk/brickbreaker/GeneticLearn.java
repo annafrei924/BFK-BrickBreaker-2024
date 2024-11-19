@@ -31,12 +31,8 @@ public class GeneticLearn {
 
         @Override
         public String toString() {
-            return "NetworkStats{" +
-                    "network=" + network +
-                    ", angleCounter=" + angleCounter +
-                    ", tickCounter=" + tickCounter +
-                    ", score=" + score +
-                    '}';
+            return "NetworkStats{" + "network=" + network + ", angleCounter=" + angleCounter
+                    + ", tickCounter=" + tickCounter + ", score=" + score + '}';
         }
     }
 
@@ -86,7 +82,8 @@ public class GeneticLearn {
                     running = !bbController.gameOver;
                 }
                 tickCounter += bbController.getTicks();
-                NetworkStats stats= new NetworkStats(network, angleSuccess, bbController.getTicks(), bbController.getScore());
+                NetworkStats stats = new NetworkStats(network, angleSuccess,
+                        bbController.getTicks(), bbController.getScore());
                 networkAndStats.add(stats);
             }
             System.out.println("Sum success: " + sumSuccess + " | tickCounter: " + tickCounter);
