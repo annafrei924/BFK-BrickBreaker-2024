@@ -4,11 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import static bfk.brickbreaker.BBController.*;
 
 public class BBFrame extends JFrame {
-    static final int BRICK_WIDTH = 60;
-    static final int BRICK_HEIGHT = 20;
 
     public BBFrame(BBController bbController) {
         setTitle("Brick Breaker");
@@ -18,18 +15,18 @@ public class BBFrame extends JFrame {
         bbController.startTimer();
 
         add(bbController.getView(), BorderLayout.CENTER);
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_LEFT) {
-                    bbController.getPaddle().moveLeft();
-                } else if (keyCode == KeyEvent.VK_RIGHT) {
-                    bbController.getPaddle().moveRight();
-                }
-                repaint();
-            }
-        });
+//        this.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                int keyCode = e.getKeyCode();
+//                if (keyCode == KeyEvent.VK_LEFT) {
+//                    bbController.getPaddle().moveLeft();
+//                } else if (keyCode == KeyEvent.VK_RIGHT) {
+//                    bbController.getPaddle().moveRight();
+//                }
+//                repaint();
+//            }
+//        });
         setFocusable(true);
         requestFocusInWindow();
     }

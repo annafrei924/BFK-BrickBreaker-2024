@@ -4,20 +4,20 @@ import javax.swing.*;
 
 import java.util.Random;
 
-import static bfk.brickbreaker.BBFrame.*;
-
-
 public class BBController{
     private Ball ball;
     private Paddle paddle;
     private BBComponent view;
     private Brick[] bricks;
     private Timer timer;
-    private int tickCounter = 0;
+    public int paddleHits = 0;
     private double currAngle = 0;
     private int score = 0;
     boolean gameOver = false;
-    final int numBricks = 1;
+    //static final int NUM_BRICKS = 0;
+    static final int BRICK_WIDTH = 60;
+    static final int BRICK_HEIGHT = 20;
+    Random rand = new Random();
 
 
     public BBController(Ball ball, Paddle paddle, BBComponent view, Brick[] bricks) {
@@ -27,10 +27,10 @@ public class BBController{
         this.bricks = bricks;
     }
 
-    public BBController() {
+    public BBController(int numBricks) {
        createBall();
        createPaddle();
-       createBricks();
+       createBricks(numBricks);
        createView();
    }
 
@@ -45,7 +45,6 @@ public class BBController{
 
     //ball moves & then checks for collisions
     public void oneRound() {
-        tickCounter++;
         ball.updatePosition();
         ball.setFrame(ball.x, ball.y, ball.width, ball.height);
         paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
@@ -65,10 +64,9 @@ public class BBController{
             bounce(Direction.RIGHT);
         } else if (ball.y + ball.height >= BBComponent.HEIGHT) {
             gameOver = true;
-        //} else if (score == numBricks) {
+        // } else if (score == NUM_BRICKS) {
             //gameOver = true;
         } else if (ball.getBounds2D().intersects(paddle.getBounds2D())) {
-            bounce(Direction.BOTTOMPADDLE);
             double paddlePosition = ball.getCenterX() - paddle.getX();
             hitPaddle(paddlePosition);
         } else {
@@ -88,17 +86,19 @@ public class BBController{
     }
 
     public void hitPaddle(double paddleX) {
-        if (paddleX < paddle.width / 4) {
-            ball.setAngle(45);
-        } else if (paddleX < paddle.width / 2) {
-            ball.setAngle(75);
-        } else if (paddleX == paddle.width / 2) {
-            ball.setAngle(90);
-        } else if (paddleX < paddle.width * 3.0 / 4.0) {
-            ball.setAngle(105);
-        } else {
-            ball.setAngle(135);
-        }
+        paddleHits++;
+//        if (paddleX < paddle.width / 4) {
+//            ball.setAngle(45);
+//        } else if (paddleX < paddle.width / 2) {
+//            ball.setAngle(75);
+//        } else if (paddleX == paddle.width / 2) {
+//            ball.setAngle(90);
+//        } else if (paddleX < paddle.width * 3.0 / 4.0) {
+//            ball.setAngle(105);
+//        } else {
+//            ball.setAngle(135);
+//        }
+        ball.setAngle(45);
     }
 
     public void bounce(Direction direction) {
@@ -111,14 +111,14 @@ public class BBController{
 
 
     public void createBall() {
-        ball = new Ball(45, 10, 290, 670, 20, 20);
+        ball = new Ball(45, 2, rand.nextInt(BBComponent.WIDTH) - 30 , 670, 20, 20);
     }
 
     public void createPaddle() {
-        paddle = new Paddle(250, 690, 100, 20);
+        paddle = new Paddle(rand.nextInt(BBComponent.WIDTH) - 110, 690, 100, 20);
     }
 
-    public void createBricks() {
+    public void createBricks(int numBricks) {
         bricks = new Brick[numBricks];
         initializeBricks();
     }
@@ -162,10 +162,6 @@ public class BBController{
         return ball;
     }
 
-    public int getTicks() {
-        return tickCounter;
-    }
-
     public int getScore() {
         return score;
     }
@@ -173,8 +169,11 @@ public class BBController{
     public double getCurrAngle() {
         double angleInRadians = Math.atan2(paddle.getY() - (ball.y + ball.height),
                 paddle.getCenterX() - ball.getCenterX());
+//        double angleInRadians = Math.atan2(paddle.getY() - (ball.y + ball.height),
+//               paddle.getX() - ball.getX());
         return Math.toDegrees(angleInRadians);
     }
+
 
 
 

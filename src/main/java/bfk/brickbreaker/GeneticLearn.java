@@ -1,91 +1,82 @@
 package bfk.brickbreaker;
 
 import java.util.*;
+
 import basicneuralnetwork.*;
 
 public class GeneticLearn {
-
-    static class NetworkStats implements Comparable<NetworkStats> {
+     class NetworkStats implements Comparable<NetworkStats> {
         public NeuralNetwork network;
-        public int tickCounter;
+        public int paddleHits;
         public int score;
 
-        public NetworkStats(NeuralNetwork network, int tickCounter, int score) {
+        public NetworkStats(NeuralNetwork network, int paddleHits, int score) {
             this.network = network;
-            this.tickCounter = tickCounter;
+            this.paddleHits = paddleHits;
             this.score = score;
         }
 
         @Override
         public int compareTo(NetworkStats o) {
-            int tickComparison = Integer.compare(o.tickCounter, this.tickCounter);
-            return tickComparison;
-
-        }
-
-        @Override
-        public String toString() {
-            return "NetworkStats{" + "network=" + network
-                    + ", tickCounter=" + tickCounter + ", score=" + score + '}';
+            int scoreComparison = Integer.compare(o.paddleHits, this.paddleHits);
+            return scoreComparison;
         }
     }
-
-
-    private static final int GENERATIONS = 50;
+    private static final int GENERATIONS = 5;
     private static final int NETWORK_COUNT = 1000;
-    private static final int INPUT_SIZE = 1;
-    private static final int OUTPUT_SIZE = 2;
+    public static final int INPUT_SIZE = 1;
+    public static final int OUTPUT_SIZE = 2;
     private static final int TOP_AMOUNT = (int) (NETWORK_COUNT * .01);
     private static final int HIDDEN_LAYERS = 2;
     public static final int HIDDEN_NODES = 4;
+    public static final int MAX_ROUNDS = 10000;
+    private static final int NUM_BRICKS = 0;
 
-    public static void main(String[] args) {
 
-        // Create Array of Networks
+    private NetworkStats play(NeuralNetwork network) {
+        int rounds = 0;
+        BBController bbController = new BBController(NUM_BRICKS);
+        boolean running = !bbController.gameOver;
+        while (running && rounds < MAX_ROUNDS) {
+            bbController.oneRound();
+            double[] input = new double[INPUT_SIZE];
+            input[0] = bbController.getCurrAngle();
+            double[] answer = network.guess(input);
+            // Move paddle based on network's decision
+            if (answer[0] > answer[1]) {
+                bbController.getPaddle().moveLeft();
+            } else {
+                bbController.getPaddle().moveRight();
+            }
+            running = !bbController.gameOver;
+            rounds++;
+        }
+        return new NetworkStats(network, bbController.paddleHits, bbController.getScore());
+    }
+
+    public NeuralNetwork getTopNetwork() {
+        NeuralNetwork topNetwork = null;
         List<NeuralNetwork> networks = new ArrayList<>();
         for (int i = 0; i < NETWORK_COUNT; i++) {
             networks.add(new NeuralNetwork(INPUT_SIZE, HIDDEN_LAYERS, HIDDEN_NODES, OUTPUT_SIZE));
         }
+
         List<NetworkStats> networkAndStats = new ArrayList<>();
 
         // For every generation
-        for (int i = 0; i < GENERATIONS; i++) {
-            System.out.println("Starting Generation " + i);
-            int totalTickCounter = 0;
+        for (int gen = 0; gen < GENERATIONS; gen++) {
+            int totalPaddleHits = 0;
+            //int totalScore = 0;
             // Every network plays the game
             for (NeuralNetwork network : networks) {
-                int rounds = 0;
-                BBController bbController = new BBController();
-                boolean running = !bbController.gameOver;
-                while (running && rounds < 1000) {
-                    bbController.oneRound();
-                    double[] input = new double[INPUT_SIZE];
-                    input[0] = bbController.getCurrAngle();
-                    double[] answer = network.guess(input);
-                    // Move paddle based on network's decision
-                    if (answer[0] > answer[1]) {
-                        bbController.getPaddle().moveLeft();
-                    } else {
-                        bbController.getPaddle().moveRight();
-                    }
-                    running = !bbController.gameOver;
-                    rounds++;
-                }
-                totalTickCounter += bbController.getTicks();
-                NetworkStats stats = new NetworkStats(network, bbController.getTicks(), bbController.getScore());
-                networkAndStats.add(stats);
+                NetworkStats networkStats = play(network);
+                networkAndStats.add(networkStats);
+                totalPaddleHits += networkStats.paddleHits;
+                //totalScore += networkStats.score;
             }
-            System.out.println("Tickcounter: " + totalTickCounter);
+            System.out.println("Generation " + gen + " | Paddle Hits: " + totalPaddleHits);
             Collections.sort(networkAndStats);
 
-            // Select the top networks
-            List<NeuralNetwork> topNetworks = new ArrayList<>();
-            for (int j = 0; j < TOP_AMOUNT; j++) {
-                topNetworks.add(networkAndStats.get(j).network);
-            }
-            networks.clear();
-
-            // Create new networks by merging top networks and mutating them
             for (int j = 0; j < TOP_AMOUNT; j++) {
                 NeuralNetwork network1 = networkAndStats.get(j).network;
                 for (int k = 0; k < TOP_AMOUNT; k++) {
@@ -97,7 +88,15 @@ public class GeneticLearn {
                     }
                 }
             }
-            networkAndStats.clear();
+            if (gen == GENERATIONS - 1) {
+                topNetwork = networkAndStats.get(0).network;
+                System.out.println(networkAndStats.get(0).paddleHits);
+            } else {
+                networkAndStats.clear();
+            }
         }
+        return topNetwork;
     }
 }
+
+
