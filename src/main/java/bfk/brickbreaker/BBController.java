@@ -110,7 +110,7 @@ public class BBController{
 
 
     public void createBall() {
-        ball = new Ball(45, 2, rand.nextInt(BBComponent.WIDTH) - 30 , 670, 20, 20);
+        ball = new Ball(45, 2, rand.nextInt(BBComponent.WIDTH) - 30, 670, 20, 20);
     }
 
     public void createPaddle() {
