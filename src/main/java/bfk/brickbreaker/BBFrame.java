@@ -15,18 +15,18 @@ public class BBFrame extends JFrame {
         bbController.startTimer();
 
         add(bbController.getView(), BorderLayout.CENTER);
-//        this.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                int keyCode = e.getKeyCode();
-//                if (keyCode == KeyEvent.VK_LEFT) {
-//                    bbController.getPaddle().moveLeft();
-//                } else if (keyCode == KeyEvent.VK_RIGHT) {
-//                    bbController.getPaddle().moveRight();
-//                }
-//                repaint();
-//            }
-//        });
+        //        this.addKeyListener(new KeyAdapter() {
+        //            @Override
+        //            public void keyPressed(KeyEvent e) {
+        //                int keyCode = e.getKeyCode();
+        //                if (keyCode == KeyEvent.VK_LEFT) {
+        //                    bbController.getPaddle().moveLeft();
+        //                } else if (keyCode == KeyEvent.VK_RIGHT) {
+        //                    bbController.getPaddle().moveRight();
+        //                }
+        //                repaint();
+        //            }
+        //        });`
         setFocusable(true);
         requestFocusInWindow();
     }

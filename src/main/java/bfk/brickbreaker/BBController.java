@@ -87,18 +87,17 @@ public class BBController{
 
     public void hitPaddle(double paddleX) {
         paddleHits++;
-//        if (paddleX < paddle.width / 4) {
-//            ball.setAngle(45);
-//        } else if (paddleX < paddle.width / 2) {
-//            ball.setAngle(75);
-//        } else if (paddleX == paddle.width / 2) {
-//            ball.setAngle(90);
-//        } else if (paddleX < paddle.width * 3.0 / 4.0) {
-//            ball.setAngle(105);
-//        } else {
-//            ball.setAngle(135);
-//        }
-        ball.setAngle(45);
+        if (paddleX < paddle.width / 4) {
+            ball.setAngle(45);
+        } else if (paddleX < paddle.width / 2) {
+            ball.setAngle(75);
+        } else if (paddleX == paddle.width / 2) {
+            ball.setAngle(90);
+        } else if (paddleX < paddle.width * 3.0 / 4.0) {
+            ball.setAngle(105);
+        } else {
+            ball.setAngle(135);
+        }
     }
 
     public void bounce(Direction direction) {
@@ -169,13 +168,7 @@ public class BBController{
     public double getCurrAngle() {
         double angleInRadians = Math.atan2(paddle.getY() - (ball.y + ball.height),
                 paddle.getCenterX() - ball.getCenterX());
-//        double angleInRadians = Math.atan2(paddle.getY() - (ball.y + ball.height),
-//               paddle.getX() - ball.getX());
         return Math.toDegrees(angleInRadians);
     }
-
-
-
-
 }
 

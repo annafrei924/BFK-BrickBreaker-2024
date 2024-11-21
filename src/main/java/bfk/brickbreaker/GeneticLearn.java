@@ -22,6 +22,7 @@ public class GeneticLearn {
             return scoreComparison;
         }
     }
+
     private static final int GENERATIONS = 5;
     private static final int NETWORK_COUNT = 1000;
     public static final int INPUT_SIZE = 2;
@@ -91,7 +92,6 @@ public class GeneticLearn {
             }
             if (gen == GENERATIONS - 1) {
                 topNetwork = networkAndStats.get(0).network;
-                System.out.println(networkAndStats.get(0).paddleHits);
             } else {
                 networkAndStats.clear();
             }
