@@ -5,7 +5,7 @@ import java.util.*;
 import basicneuralnetwork.*;
 
 public class GeneticLearn {
-     class NetworkStats implements Comparable<NetworkStats> {
+     static class NetworkStats implements Comparable<NetworkStats> {
         public NeuralNetwork network;
         public int paddleHits;
         public int score;
@@ -34,7 +34,7 @@ public class GeneticLearn {
     private static final int NUM_BRICKS = 0;
 
 
-    private NetworkStats play(NeuralNetwork network) {
+    private static NetworkStats play(NeuralNetwork network) {
         int rounds = 0;
         BBController bbController = new BBController(NUM_BRICKS);
         boolean running = !bbController.gameOver;
@@ -56,7 +56,7 @@ public class GeneticLearn {
         return new NetworkStats(network, bbController.paddleHits, bbController.getScore());
     }
 
-    public NeuralNetwork getTopNetwork() {
+    public static NeuralNetwork getTopNetwork() {
         NeuralNetwork topNetwork = null;
         List<NeuralNetwork> networks = new ArrayList<>();
         for (int i = 0; i < NETWORK_COUNT; i++) {
@@ -67,16 +67,16 @@ public class GeneticLearn {
 
         // For every generation
         for (int gen = 0; gen < GENERATIONS; gen++) {
-            int totalPaddleHits = 0;
+            //int totalPaddleHits = 0;
             //int totalScore = 0;
             // Every network plays the game
             for (NeuralNetwork network : networks) {
                 NetworkStats networkStats = play(network);
                 networkAndStats.add(networkStats);
-                totalPaddleHits += networkStats.paddleHits;
+                //totalPaddleHits += networkStats.paddleHits;
                 //totalScore += networkStats.score;
             }
-            System.out.println("Generation " + gen + " | Paddle Hits: " + totalPaddleHits);
+            //System.out.println("Generation " + gen + " | Paddle Hits: " + totalPaddleHits);
             Collections.sort(networkAndStats);
 
             for (int j = 0; j < TOP_AMOUNT; j++) {
@@ -97,6 +97,11 @@ public class GeneticLearn {
             }
         }
         return topNetwork;
+    }
+
+    public static void main(String[] args) {
+        NeuralNetwork network = getTopNetwork();
+        network.writeToFile("ai");
     }
 }
 

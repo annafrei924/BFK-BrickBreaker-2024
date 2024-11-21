@@ -2,13 +2,14 @@ package bfk.brickbreaker;
 
 import basicneuralnetwork.NeuralNetwork;
 
+import java.io.IOException;
+
 import static bfk.brickbreaker.GeneticLearn.*;
 
 public class NetworkPlay {
 
-    public static void main(String[] args) throws InterruptedException {
-        GeneticLearn geneticLearn = new GeneticLearn();
-        NeuralNetwork topNetwork = geneticLearn.getTopNetwork();
+    public static void main(String[] args) throws InterruptedException, IOException {
+        NeuralNetwork topNetwork = NeuralNetwork.readFromFile("ai.json");
         BBController bbController = new BBController(20);
         BBFrame frame = new BBFrame(bbController);
         frame.setVisible(true);
