@@ -115,7 +115,7 @@ public class BBController{
     }
 
     public void createPaddle() {
-        paddle = new Paddle(rand.nextInt(BBComponent.WIDTH) - 110, 690, 100, 20);
+        paddle = new Paddle(rand.nextInt(BBComponent.WIDTH) - 110, 790, 100, 20);
     }
 
     public void createBricks(int numBricks) {

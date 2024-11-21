@@ -8,7 +8,7 @@ public class BBComponent extends JComponent {
     private Ball ball;
     private Paddle paddle;
     private Brick[] bricks;
-    public static final int WIDTH = 600;
+    public static final int WIDTH = 650;
     public static final int HEIGHT = 800;
 
     public BBComponent(Ball ball, Paddle paddle, Brick[] bricks) {

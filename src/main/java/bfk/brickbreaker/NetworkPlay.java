@@ -17,6 +17,7 @@ public class NetworkPlay {
             bbController.oneRound();
             double[] input = new double[INPUT_SIZE];
             input[0] = bbController.getCurrAngle();
+            input[1] = bbController.getBall().getY();
             double[] answer = topNetwork.guess(input);
             // Move paddle based on network's decision
             if (answer[0] > answer[1]) {
@@ -25,7 +26,7 @@ public class NetworkPlay {
                 bbController.getPaddle().moveRight();
             }
             running = !bbController.gameOver;
-            Thread.sleep(1);
+            Thread.sleep(3);
         }
         frame.dispose();
     }

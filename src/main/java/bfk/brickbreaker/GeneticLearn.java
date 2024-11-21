@@ -24,7 +24,7 @@ public class GeneticLearn {
     }
     private static final int GENERATIONS = 5;
     private static final int NETWORK_COUNT = 1000;
-    public static final int INPUT_SIZE = 1;
+    public static final int INPUT_SIZE = 2;
     public static final int OUTPUT_SIZE = 2;
     private static final int TOP_AMOUNT = (int) (NETWORK_COUNT * .01);
     private static final int HIDDEN_LAYERS = 2;
@@ -41,6 +41,7 @@ public class GeneticLearn {
             bbController.oneRound();
             double[] input = new double[INPUT_SIZE];
             input[0] = bbController.getCurrAngle();
+            input[1] = bbController.getBall().getY();
             double[] answer = network.guess(input);
             // Move paddle based on network's decision
             if (answer[0] > answer[1]) {

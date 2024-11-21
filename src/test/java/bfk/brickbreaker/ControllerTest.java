@@ -71,7 +71,7 @@ public class ControllerTest {
     public void ballMoves() {
         // given
 
-        BBController controller = new BBController();
+        BBController controller = new BBController(0);
         Ball ball = controller.getBall();
 
         double initialX = ball.getX();
@@ -87,7 +87,7 @@ public class ControllerTest {
 
     @Test
     public void checkAngle() {
-        BBController controller = new BBController();
+        BBController controller = new BBController(0);
         Ball ball = controller.getBall();
         Paddle paddle = controller.getPaddle();
 
