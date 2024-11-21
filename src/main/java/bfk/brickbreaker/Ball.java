@@ -54,7 +54,5 @@ public class Ball extends Ellipse2D.Double {
         angle = newAngle;
     }
 
-    public double getSpeed() { return speed; }
-
 }
 
