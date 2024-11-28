@@ -21,21 +21,19 @@ public class ControllerTest {
         BBController controller = new BBController(ball, paddle, view, bricks);
 
         controller.hitPaddle(10);
-        assertEquals(325, ball.getAngle());
+        assertEquals(45, ball.getAngle());
 
         controller.hitPaddle(40);
-        assertEquals(290, ball.getAngle());
+        assertEquals(75, ball.getAngle());
 
         controller.hitPaddle(50);
-        assertEquals(270, ball.getAngle());
+        assertEquals(90, ball.getAngle());
 
         controller.hitPaddle(70);
-        assertEquals(250, ball.getAngle());
+        assertEquals(105, ball.getAngle());
 
         controller.hitPaddle(90);
-        assertEquals(215, ball.getAngle());
-
-
+        assertEquals(135, ball.getAngle());
     }
 
     @Test
@@ -72,22 +70,35 @@ public class ControllerTest {
     @Test
     public void ballMoves() {
         // given
-        Ball ball = new Ball(145, 10, 260, 680, 20, 20);
-        Paddle paddle = mock(Paddle.class);
-        BBComponent view = mock(BBComponent.class);
-        Brick[] bricks = new Brick[20];
 
-        BBController controller = new BBController(ball, paddle, view, bricks);
+        BBController controller = new BBController(0);
+        Ball ball = controller.getBall();
 
         double initialX = ball.getX();
         double initialY = ball.getY();
 
         // when
-        controller.playGame();
+        controller.oneRound();
 
         // then
         assertNotEquals(initialX, ball.x);
         assertNotEquals(initialY, ball.y);
+    }
+
+    @Test
+    public void checkAngle() {
+        BBController controller = new BBController(0);
+        Ball ball = controller.getBall();
+        Paddle paddle = controller.getPaddle();
+
+        ball.x = 200;
+        ball.y = 100;
+        paddle.x = 160;
+        paddle.y = 690;
+
+
+        assertEquals(ball.getCenterX(), paddle.getCenterX());
+        assertEquals(controller.getCurrAngle(), 90);
     }
 }
 

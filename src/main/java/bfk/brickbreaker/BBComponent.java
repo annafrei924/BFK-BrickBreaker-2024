@@ -2,20 +2,20 @@ package bfk.brickbreaker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class BBComponent extends JComponent {
 
     private Ball ball;
     private Paddle paddle;
     private Brick[] bricks;
+    public static final int WIDTH = 650;
+    public static final int HEIGHT = 800;
 
     public BBComponent(Ball ball, Paddle paddle, Brick[] bricks) {
         this.ball = ball;
         this.paddle = paddle;
         this.bricks = bricks;
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -41,4 +41,5 @@ public class BBComponent extends JComponent {
         g.setColor(Color.red);
         g2.fill(paddle);
     }
+
 }

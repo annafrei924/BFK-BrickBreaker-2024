@@ -1,10 +1,11 @@
 package bfk.brickbreaker;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
+
+
 
 public class Paddle extends Rectangle {
-    private final int speed = 15;
+    private final int speed = 10;
 
     public Paddle(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -17,7 +18,7 @@ public class Paddle extends Rectangle {
     }
 
     public void moveRight() {
-        if (x < 600 - width) {
+        if (x < BBComponent.WIDTH - width) {
             x += speed;
         }
     }
