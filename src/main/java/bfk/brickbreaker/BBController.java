@@ -11,10 +11,8 @@ public class BBController{
     private Brick[] bricks;
     private Timer timer;
     public int paddleHits = 0;
-    private double currAngle = 0;
     private int score = 0;
     boolean gameOver = false;
-    //static final int NUM_BRICKS = 0;
     static final int BRICK_WIDTH = 60;
     static final int BRICK_HEIGHT = 20;
     Random rand = new Random();
@@ -49,7 +47,7 @@ public class BBController{
         ball.setFrame(ball.x, ball.y, ball.width, ball.height);
         paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
 
-        currAngle = getCurrAngle();
+        //currAngle = getCurrAngle();
         checkCollisions();
         view.repaint();
     }
@@ -57,12 +55,10 @@ public class BBController{
 
     public void checkCollisions() {
         if (ball.y <= 0) {
-            bounce(Direction.TOP);
-        } else if (ball.x <= 0) {
-            bounce(Direction.LEFT);
-        } else if (ball.x + ball.width >= BBComponent.WIDTH) {
-            bounce(Direction.RIGHT);
-        } else if (ball.y + ball.height >= BBComponent.HEIGHT) {
+            ball.collideTop();
+        } else if (ball.x <= 0 || ball.x + ball.width >= BBComponent.WIDTH) {
+            ball.collideWall();
+        }  else if (ball.y + ball.height >= BBComponent.HEIGHT) {
             gameOver = true;
         // } else if (score == NUM_BRICKS) {
             //gameOver = true;
@@ -75,7 +71,7 @@ public class BBController{
                 Brick brick = bricks[i];
                 if (brick != null) {
                     if (ball.getBounds2D().intersects(brick.getBounds2D())) {
-                        bounce(Direction.BRICK);
+                        ball.collideTop();
                         bricks[i] = null;
                         score++;
                         return;
@@ -100,17 +96,9 @@ public class BBController{
         }
     }
 
-    public void bounce(Direction direction) {
-        switch (direction) {
-            case TOP, BRICK -> ball.setAngle((360 - ball.getAngle()) % 360);
-            case RIGHT, LEFT -> ball.setAngle((180 - ball.getAngle()) % 360);
-            default -> { }
-        }
-    }
-
 
     public void createBall() {
-        ball = new Ball(45, 2, rand.nextInt(BBComponent.WIDTH) - 30, 670, 20, 20);
+        ball = new Ball(45, 1, rand.nextInt(BBComponent.WIDTH) - 30, 670, 20, 20);
     }
 
     public void createPaddle() {
@@ -127,7 +115,6 @@ public class BBController{
     }
 
     public void initializeBricks() {
-        Random rand = new Random();
         for (int i = 0; i < bricks.length; i++) {
             boolean overlap;
             int x;
@@ -165,10 +152,5 @@ public class BBController{
         return score;
     }
 
-    public double getCurrAngle() {
-        double angleInRadians = Math.atan2(paddle.getY() - (ball.y + ball.height),
-                paddle.getCenterX() - ball.getCenterX());
-        return Math.toDegrees(angleInRadians);
-    }
 }
 
