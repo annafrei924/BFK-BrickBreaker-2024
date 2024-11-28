@@ -4,24 +4,61 @@ import java.awt.geom.Ellipse2D;
 import static bfk.brickbreaker.BBFrame.*;
 public class Ball extends Ellipse2D.Double {
     private double angle;
+
     private double speed;
+    private double dx;
+    private double dy;
 
     public Ball(double angle, double speed, double x, double y, int width, int height) {
         super(x, y, width, height);
         this.angle = angle;
         this.speed = speed;
+        dx = speed * Math.cos(Math.toRadians(angle));
+        dy = speed * Math.sin(Math.toRadians(angle));
+
 
     }
 
-
-    public double updateX() {
-        x += speed * Math.cos(Math.toRadians(angle));
-        return x;
+    // Update the ball's position, checking for boundaries and resetting if needed
+    public void updatePosition() {
+        x += dx;
+        y -= dy;
+        clampPosition();
+        resetPositionIfOffScreen();
     }
 
-    public double updateY() {
-        y -= speed * Math.sin(Math.toRadians(angle));
-        return y;
+    //checks if ball collides with paddle
+    public boolean checkPaddleCollision(Paddle paddle) {
+        if (intersects(paddle.getBounds2D())) {
+            //angle change
+            double paddlePosition = getCenterX() - paddle.getX();
+            if (paddlePosition < paddle.width / 4) {
+                setAngle(45);
+            } else if (paddlePosition < paddle.width / 2) {
+                setAngle(75);
+            } else if (paddlePosition == paddle.width / 2) {
+                setAngle(90);
+            } else if (paddlePosition < paddle.width * 3.0 / 4.0) {
+                setAngle(105);
+            } else {
+                setAngle(135);
+            }
+            dx = speed * Math.cos(Math.toRadians(angle));
+            // the first is physically correct but told to use second for now
+            //dy = speed * Math.sin(Math.toRadians(angle));
+            dy = -dy;
+            return true;
+        }
+        return false;
+    }
+
+
+    public void collideWall() {
+        dx = -dx;
+    }
+
+    public void collideTop() {
+        dy = -dy;
     }
 
     // Clamp the ball's position to the screen bounds (0 <= x <= screenWidth, 0 <= y <= screenHeight)
@@ -38,13 +75,6 @@ public class Ball extends Ellipse2D.Double {
         }
     }
 
-    // Update the ball's position, checking for boundaries and resetting if needed
-    public void updatePosition() {
-        updateX();
-        updateY();
-        clampPosition();
-        resetPositionIfOffScreen();
-    }
 
     public double getAngle() {
         return angle;
@@ -53,6 +83,8 @@ public class Ball extends Ellipse2D.Double {
     public void setAngle(double newAngle) {
         angle = newAngle;
     }
+
+
 
 }
 
