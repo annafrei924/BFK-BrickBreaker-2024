@@ -4,8 +4,7 @@ import java.awt.geom.Ellipse2D;
 import static bfk.brickbreaker.BBFrame.*;
 public class Ball extends Ellipse2D.Double {
     private double angle;
-
-    private double speed;
+    private final double speed;
     private double dx;
     private double dy;
 
@@ -31,27 +30,17 @@ public class Ball extends Ellipse2D.Double {
     public boolean checkPaddleCollision(Paddle paddle) {
         if (intersects(paddle.getBounds2D())) {
             //angle change
-            double paddlePosition = getCenterX() - paddle.getX();
-            if (paddlePosition < paddle.width / 4) {
-                setAngle(45);
-            } else if (paddlePosition < paddle.width / 2) {
-                setAngle(75);
-            } else if (paddlePosition == paddle.width / 2) {
-                setAngle(90);
-            } else if (paddlePosition < paddle.width * 3.0 / 4.0) {
-                setAngle(105);
-            } else {
-                setAngle(135);
-            }
-            dx = speed * Math.cos(Math.toRadians(angle));
-            // the first is physically correct but told to use second for now
-            //dy = speed * Math.sin(Math.toRadians(angle));
+            dx = (paddle.getCenterX() - getCenterX()) / (paddle.width / 2);
             dy = -dy;
             return true;
         }
         return false;
     }
 
+    public boolean checkBrickCollision(Brick brick) {
+        collideTop();
+        return intersects(brick);
+    }
 
     public void collideWall() {
         dx = -dx;
@@ -75,16 +64,13 @@ public class Ball extends Ellipse2D.Double {
         }
     }
 
-
-    public double getAngle() {
-        return angle;
+    public double getDx() {
+        return dx;
     }
 
-    public void setAngle(double newAngle) {
-        angle = newAngle;
+    public double getDy() {
+        return dy;
     }
-
-
 
 }
 

@@ -24,19 +24,18 @@ public class TrainAi {
         }
     }
 
-    private static final int GENERATIONS = 5;
+    private static final int GENERATIONS = 100;
     private static final int AGENTS = 1000;
-    public static final int INPUT_SIZE = 2;
+    public static final int INPUT_SIZE = 4;
     public static final int OUTPUT_SIZE = 2;
     private static final int TOP_AMOUNT = (int) (AGENTS * .01);
     private static final int HIDDEN_LAYERS = 2;
     public static final int HIDDEN_NODES = 4;
     public static final int MAX_ROUNDS = 10000;
-    //private static final int NUM_BRICKS = 0;
 
     public static NetworkStats play(NeuralNetwork network) {
         int rounds = 0;
-        Simulation simulation = new Simulation(network, 600, 800);
+        Simulation simulation = new Simulation(network, BBComponent.WIDTH, BBComponent.HEIGHT);
         while (rounds < MAX_ROUNDS) {
              if (!simulation.advance()) {
                  break;

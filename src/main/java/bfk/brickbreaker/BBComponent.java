@@ -5,16 +5,16 @@ import java.awt.*;
 
 public class BBComponent extends JComponent {
 
-    private Ball ball;
-    private Paddle paddle;
-    private Brick[] bricks;
-    public static final int WIDTH = 650;
+    private Simulation simulation;
+    public static final int WIDTH = 600;
     public static final int HEIGHT = 800;
+    //private JLabel scoreLabel;
 
-    public BBComponent(Ball ball, Paddle paddle, Brick[] bricks) {
-        this.ball = ball;
-        this.paddle = paddle;
-        this.bricks = bricks;
+
+    public BBComponent(Simulation simulation) {
+        this.simulation = simulation;
+//        scoreLabel = new JLabel("Score: 0", SwingConstants.RIGHT);
+//        scoreLabel.setForeground(Color.GREEN);
     }
 
     @Override
@@ -25,21 +25,22 @@ public class BBComponent extends JComponent {
         g.setColor(Color.white);
         g.fillRect(0, 0, getWidth(), getHeight());  // Clear the screen
 
-        // Draw the bricks
+        // Draw the brick
         g.setColor(Color.blue);
-        for (Brick brick : bricks) {
-            if (brick != null) {
-                g2.fill(brick);
-            }
+        if (simulation.getBrick() != null) {
+            g2.fill(simulation.getBrick());
         }
 
         // Draw the ball
         g.setColor(Color.black);
-        g2.fill(ball);
+        g2.fill(simulation.getBall());
 
         // Draw the paddle
         g.setColor(Color.red);
-        g2.fill(paddle);
+        g2.fill(simulation.getPaddle());
+
+        String scoreText = "Score: " + simulation.getScore();
+        g.drawString(scoreText, getWidth() - 120, 30);
     }
 
 }

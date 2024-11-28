@@ -13,14 +13,13 @@ public class BBFrame extends JFrame {
         setSize(BBComponent.WIDTH, BBComponent.HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        Brick[] bricks = new Brick[0];
-        view = new BBComponent(simulation.getBall(), simulation.getPaddle(), bricks);
+        view = new BBComponent(simulation);
         add(view, BorderLayout.CENTER);
         setFocusable(true);
         requestFocusInWindow();
     }
 
-    public  BBComponent getView() {
+    public BBComponent getView() {
         return view;
     }
 }
