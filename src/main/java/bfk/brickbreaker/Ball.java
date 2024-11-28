@@ -38,8 +38,11 @@ public class Ball extends Ellipse2D.Double {
     }
 
     public boolean checkBrickCollision(Brick brick) {
-        collideTop();
-        return intersects(brick);
+        if (intersects(brick)) {
+            collideTop();
+            return true;
+        }
+        return false;
     }
 
     public void collideWall() {
