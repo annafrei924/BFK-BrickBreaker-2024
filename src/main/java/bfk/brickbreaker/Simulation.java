@@ -78,18 +78,19 @@ public class Simulation {
         } else if (ball.checkPaddleCollision(paddle)) {
             score++;
         } else {
+
             // Iterate through each brick
-//            for (int i = 0; i < bricks.length; i++) {
-//                Brick brick = bricks[i];
-//                if (brick != null) {
-//                    if (ball.getBounds2D().intersects(brick.getBounds2D())) {
-//                        ball.collideTop();
-//                        bricks[i] = null;
-//                        score++;
-//                        return;
-//                    }
-//                }
-//            }
+            //            for (int i = 0; i < bricks.length; i++) {
+            //                Brick brick = bricks[i];
+            //                if (brick != null) {
+            //                    if (ball.getBounds2D().intersects(brick.getBounds2D())) {
+            //                        ball.collideTop();
+            //                        bricks[i] = null;
+            //                        score++;
+            //                        return;
+            //                    }
+            //                }
+            //            }
         }
     }
 
