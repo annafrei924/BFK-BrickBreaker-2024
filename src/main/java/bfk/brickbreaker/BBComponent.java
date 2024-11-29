@@ -8,13 +8,11 @@ public class BBComponent extends JComponent {
     private Simulation simulation;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 800;
-    //private JLabel scoreLabel;
+
 
 
     public BBComponent(Simulation simulation) {
         this.simulation = simulation;
-//        scoreLabel = new JLabel("Score: 0", SwingConstants.RIGHT);
-//        scoreLabel.setForeground(Color.GREEN);
     }
 
     @Override

@@ -17,7 +17,8 @@ public class BrickFactory {
     }
 
     public Brick newBrick() {
-        return new Brick(random.nextInt(screenWidth - brickWidth), random.nextInt(screenHeight/2), brickWidth, brickHeight);
+        return new Brick(random.nextInt(screenWidth - brickWidth),
+                random.nextInt(screenHeight / 2), brickWidth, brickHeight);
     }
 
 }

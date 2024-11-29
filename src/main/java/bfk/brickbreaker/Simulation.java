@@ -42,7 +42,7 @@ public class Simulation {
 
 
     public void createBall() {
-        ball = new Ball(45, 1, rand.nextInt(width) - 30, 670, 20, 20);
+        ball = new Ball(45, 2, rand.nextInt(width) - 30, 670, 20, 20);
     }
 
     public void createPaddle() {
@@ -87,7 +87,7 @@ public class Simulation {
         }  else if (ball.y + ball.height >= height) {
             gameOver = true;
         } else if (ball.checkPaddleCollision(paddle)) {
-            if(!lastHitPaddle) {
+            if (!lastHitPaddle) {
                 score++;
             }
             lastHitPaddle = true;
