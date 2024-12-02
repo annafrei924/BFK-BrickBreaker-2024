@@ -6,15 +6,19 @@ import basicneuralnetwork.NeuralNetwork;
 import java.util.Random;
 
 public class Simulation {
-
-    private static final int INPUT_SIZE = 2;
+    public static final int  BRICK_WIDTH = 60;
+    public static final int BRICK_HEIGHT = 20;
+    private static final int INPUT_SIZE = 4;
     private NeuralNetwork network;
     private Ball ball;
     private Paddle paddle;
-    private int width;
-    private int height;
+    private BrickFactory brickFactory;
+    private Brick brick = null;
+    private final int width;
+    private final int height;
     private boolean gameOver;
     private int score;
+    private boolean lastHitPaddle;
     Random rand = new Random();
 
     public Simulation(NeuralNetwork network, Ball ball, Paddle paddle, int width, int height) {
@@ -23,6 +27,7 @@ public class Simulation {
         this.paddle = paddle;
         this.width = width;
         this.height = height;
+        createBrickFactory();
     }
 
     public Simulation(NeuralNetwork network, int width, int height) {
@@ -31,33 +36,41 @@ public class Simulation {
         this.height = height;
         createBall();
         createPaddle();
+        createBrickFactory();
 
     }
 
 
     public void createBall() {
-        ball = new Ball(45, 1, rand.nextInt(width) - 30, 670, 20, 20);
+        ball = new Ball(45, 2, rand.nextInt(width) - 30, 670, 20, 20);
     }
 
     public void createPaddle() {
         paddle = new Paddle(rand.nextInt(width) - 110, 790, 100, 20);
     }
 
+    public void createBrickFactory() {
+        brickFactory = new BrickFactory(BBComponent.WIDTH, BBComponent.HEIGHT, BRICK_WIDTH, BRICK_HEIGHT);
+    }
 
     public boolean advance() {
+        if (brick == null) {
+            brick = brickFactory.newBrick();
+        }
         ball.updatePosition();
         ball.setFrame(ball.x, ball.y, ball.width, ball.height);
         networkPlay();
         paddle.setFrame(paddle.getX(), paddle.getY(), paddle.width, paddle.height);
         checkCollisions();
         return !gameOver;
-        //view.repaint();
     }
 
     public void networkPlay() {
         double[] input = new double[INPUT_SIZE];
         input[0] = ball.getCenterX();
         input[1] = paddle.getCenterX();
+        input[2] = brick.getCenterX();
+        input[3] = brick.getCenterY();
         double[] answer = network.guess(input);
         if (answer[0] > answer[1]) {
             paddle.moveLeft();
@@ -73,24 +86,17 @@ public class Simulation {
             ball.collideWall();
         }  else if (ball.y + ball.height >= height) {
             gameOver = true;
-            // } else if (score == NUM_BRICKS) {
-            //gameOver = true;
         } else if (ball.checkPaddleCollision(paddle)) {
-            score++;
-        } else {
-
-            // Iterate through each brick
-            //            for (int i = 0; i < bricks.length; i++) {
-            //                Brick brick = bricks[i];
-            //                if (brick != null) {
-            //                    if (ball.getBounds2D().intersects(brick.getBounds2D())) {
-            //                        ball.collideTop();
-            //                        bricks[i] = null;
-            //                        score++;
-            //                        return;
-            //                    }
-            //                }
-            //            }
+            if (!lastHitPaddle) {
+                score++;
+            }
+            lastHitPaddle = true;
+        } else if (ball.checkBrickCollision(brick)) {
+            if (lastHitPaddle) {
+                score++;
+            }
+            lastHitPaddle = false;
+            brick = null;
         }
     }
 
@@ -104,6 +110,10 @@ public class Simulation {
 
     public Paddle getPaddle() {
         return paddle;
+    }
+
+    public Brick getBrick() {
+        return brick;
     }
 
 
