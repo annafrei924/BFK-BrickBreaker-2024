@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class PlayAi {
     public static void main(String[] args) throws InterruptedException, IOException {
-        NeuralNetwork network = NeuralNetwork.readFromFile("ai.json");
+        NeuralNetwork network = NeuralNetwork.readFromFile("src/resources/ai.json");
         Simulation simulation = new Simulation(network, BBComponent.WIDTH, BBComponent.HEIGHT);
 
         BBFrame frame = new BBFrame(simulation);

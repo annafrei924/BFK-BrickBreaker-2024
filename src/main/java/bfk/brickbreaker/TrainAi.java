@@ -2,6 +2,7 @@ package bfk.brickbreaker;
 
 import basicneuralnetwork.NeuralNetwork;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -89,7 +90,12 @@ public class TrainAi {
 
     public static void main(String[] args) {
         NeuralNetwork topNetwork = getTopNetwork();
-        topNetwork.writeToFile("ai");;
+        try {
+            topNetwork.writeToFile("src/resources/ai.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ;
     }
 
 

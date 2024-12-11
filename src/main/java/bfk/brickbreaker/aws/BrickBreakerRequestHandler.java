@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class BrickBreakerRequestHandler implements RequestHandler<String, String> {
 
@@ -12,7 +13,8 @@ public class BrickBreakerRequestHandler implements RequestHandler<String, String
     public String handleRequest(String input, Context context) {
 
         try {
-            NeuralNetwork network = NeuralNetwork.readFromFile("ai.json");
+            InputStream in = ClassLoader.getSystemResourceAsStream("/src/resources/ai.json");
+            NeuralNetwork network = NeuralNetwork.readFromFile(in);
             double guess[] = new double[4];
             guess[0] = 10; //x ball
             guess[1] = 20; //x paddle
